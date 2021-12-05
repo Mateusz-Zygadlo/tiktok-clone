@@ -46,7 +46,9 @@ const MoreRegister: React.FC = () => {
       <div className="flex justify-center items-center flex-col">
         <h1 className="text-3xl font-semibold w-64 text-center mb-2">More register</h1>
         <form>
+          <p className="text-sm font-semibold">first name</p>
           <input type="text" name="firstName" onChange={changeInputValue} value={userData.firstName} placeholder="Enter your First name" className="authInput textIndent" required />
+          <p className="text-sm font-semibold">last name</p>
           <input type="email" name="lastName" onChange={changeInputValue} value={userData.lastName} placeholder="Enter your Last name" className="authInput textIndent" required />
           <div className="flex justify-around text-sm font-semibold">
             <p>year</p>

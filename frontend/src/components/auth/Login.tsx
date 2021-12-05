@@ -29,7 +29,9 @@ const Login: React.FC = () => {
       <div className="flex justify-center items-center flex-col">
         <h1 className="text-3xl font-semibold w-64 text-center mb-2">Login to TikTok clone</h1>
         <form onSubmit={submitUserData}>
+          <p className="text-sm font-semibold">email</p>
           <input type="email" name="email" value={userData.email} onChange={changeInputValue} placeholder="Enter your Email" className="authInput textIndent" required />
+          <p className="text-sm font-semibold">password</p>
           <div className="flex items-center">
             <input type={showPassword ? "text" : "password"} name="password" value={userData.password} onChange={changeInputValue} placeholder="Enter your Password" className="authInput textIndent" required />
             <span className="material-icons mt-2 -ml-10 cursor-pointer" onClick={toggleShowPassword}>{showPassword ? "visibility" : "visibility_off"}</span>

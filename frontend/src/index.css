@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer base{
+  input[type="file"]{
+    @apply flex;
+  }
+  input[type=file]::-webkit-file-upload-button,
+  input[type=file]::file-selector-button {
+      @apply w-32 h-10 rounded-md font-extrabold bg-black hover:bg-gray-700 text-white cursor-pointer transition-colors outline-none border-none
+  }
+}
+
 @layer components{
   .authInput{
     @apply w-64 border-2 block mt-1 py-2 outline-none hover:border-black cursor-pointer transition-colors;
