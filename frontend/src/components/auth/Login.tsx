@@ -18,15 +18,20 @@ const Login: React.FC = () => {
     const { name, value } = e.target as HTMLInputElement;
     setUserData({...userData, [name]: value});
   }
+  const submitUserData = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    return setUserData({email: '', password: ''})
+  }
 
   return(
     <Auth>
       <div className="flex justify-center items-center flex-col">
         <h1 className="text-3xl font-semibold w-64 text-center mb-2">Login to TikTok clone</h1>
-        <form>
-          <input type="text" name="email" value={userData.email} onChange={changeInputValue} placeholder="Enter your Email" className="authInput textIndent" />
+        <form onSubmit={submitUserData}>
+          <input type="email" name="email" value={userData.email} onChange={changeInputValue} placeholder="Enter your Email" className="authInput textIndent" required />
           <div className="flex items-center">
-            <input type={showPassword ? "text" : "password"} name="password" value={userData.password} onChange={changeInputValue} placeholder="Enter your Password" className="authInput textIndent" />
+            <input type={showPassword ? "text" : "password"} name="password" value={userData.password} onChange={changeInputValue} placeholder="Enter your Password" className="authInput textIndent" required />
             <span className="material-icons mt-2 -ml-10 cursor-pointer" onClick={toggleShowPassword}>{showPassword ? "visibility" : "visibility_off"}</span>
           </div>
           <button type="submit" className="authButton">Login</button>
