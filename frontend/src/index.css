@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+  .authInput{
+    @apply w-64 border-2 block mt-1 py-2 outline-none hover:border-black cursor-pointer transition-colors;
+  }
+  .authSpan{
+    @apply w-12 h-12 flex justify-center items-center text-gray-700 hover:text-gray-900 transition-colors;
+  }
+  .authButton{
+    @apply w-7/12 h-12 flex items-center justify-center mx-auto rounded-lg font-extrabold bg-red-500 hover:bg-red-600 text-white text-xl cursor-pointer mb-3 mt-5 transition-colors;
+  }
+}
+
+@layer utilities {
+  .authWidth{
+    width: 475px;
+  }
+  .textIndent{
+    text-indent: 10px;
+  }
+}

@@ -1,7 +1,11 @@
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
+
 const App = () => {
   return(
     <div>
-      <h1 className="text-4xl font-semibold">App</h1>
+      <Register />
+      <Login />
     </div>
   )
 }
