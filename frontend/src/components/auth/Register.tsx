@@ -48,7 +48,7 @@ const Register: React.FC = () => {
             <input type={showPasswordTwo ? "text" : "password"} name="passwordTwo" value={userData.passwordTwo} onChange={changeInputValue} placeholder="Repeat Password" className="authInput textIndent" required />
             <span className="material-icons mt-2 -ml-10 cursor-pointer" onClick={()=>{setShowPasswordTwo(!showPasswordTwo)}}>{showPasswordTwo ? "visibility" : "visibility_off"}</span>
           </div>
-          <button type="submit" className="authButton">Register</button>
+          <button type="submit" className="authButton">Next</button>
         </form>
          <a href='/register' className="w-60 hover:underline pb-2">If you have an account, click here</a>
       </div>

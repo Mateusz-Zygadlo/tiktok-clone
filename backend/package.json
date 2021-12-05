@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
-    "devstart": "nodemon ./build/app.ts"
+    "devstart": "nodemon ./app.ts"
   },
   "keywords": [],
   "author": "",
