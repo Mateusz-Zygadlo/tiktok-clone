@@ -10,7 +10,11 @@ interface UserData{
   day: number
 }
 
-const PersonalData: React.FC = () => {
+interface ComponentProps{
+  setActualComponentFunc: (props: string) => void,
+}
+
+const PersonalData: React.FC<ComponentProps> = ({ setActualComponentFunc }) => {
   const [years, setYears] = useState<number[] | []>([]);
   const [months, setMonths] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
   const [days, setDays] = useState<number[] | []>([]);
@@ -72,7 +76,7 @@ const PersonalData: React.FC = () => {
               )}
             </select>
           </div>
-          <button type="submit" className="authButton">Next</button>
+          <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('ProfileImage')}}>Next</button>
         </form>
          <a href='/register' className="w-60 hover:underline pb-2">If you have an account, click here</a>
       </div>

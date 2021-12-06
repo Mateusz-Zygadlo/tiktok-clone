@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import Auth from '../../layouts/Auth';
 
-const ProfileImage: React.FC = () => {
+interface ComponentProps{
+  setActualComponentFunc: (props: string) => void,
+}
+
+const ProfileImage: React.FC<ComponentProps> = ({ setActualComponentFunc }) => {
   const [previewImage, setPreviewImage] = useState<any>(null);
   const [fileErr, setFileErr] = useState<boolean>(false);
 
@@ -36,7 +40,7 @@ const ProfileImage: React.FC = () => {
             <img src={previewImage} alt="img" className="w-64 h-64 mt-3 bg-white" />
           ): null}
           {fileErr ? <p>Your file is too large</p> : null}
-          <button type="submit" className="authButton">Next</button>
+          <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('DescriptionProfile')}}>Next</button>
         </form>
          <a href='/register' className="w-60 hover:underline pb-2">If you have an account, click here</a>
       </div>

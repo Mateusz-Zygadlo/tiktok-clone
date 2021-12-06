@@ -8,7 +8,12 @@ interface UserData{
   passwordTwo: string,
 }
 
-const BasicData: React.FC = () => {
+interface ComponentProps{
+  closeButton: boolean,
+  setActualComponentFunc: (props: string) => void,
+}
+
+const BasicData: React.FC<ComponentProps> = ({ closeButton, setActualComponentFunc }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showPasswordTwo, setShowPasswordTwo] = useState<boolean>(false);
   const [userData, setUserData] = useState<UserData>({
@@ -34,7 +39,7 @@ const BasicData: React.FC = () => {
   }
 
   return(
-    <Auth>
+    <Auth closeButton={closeButton}>
       <div className="flex justify-center items-center flex-col">
         <h1 className="text-3xl font-semibold w-64 text-center mb-2">Register</h1>
         <form onSubmit={submitUserData}>
@@ -52,7 +57,7 @@ const BasicData: React.FC = () => {
             <input type={showPasswordTwo ? "text" : "password"} name="passwordTwo" value={userData.passwordTwo} onChange={changeInputValue} placeholder="Repeat Password" className="authInput textIndent" required />
             <span className="material-icons mt-2 -ml-10 cursor-pointer" onClick={()=>{setShowPasswordTwo(!showPasswordTwo)}}>{showPasswordTwo ? "visibility" : "visibility_off"}</span>
           </div>
-          <button type="submit" className="authButton">Next</button>
+          <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('PersonalData')}}>Next</button>
         </form>
          <a href='/register' className="w-60 hover:underline pb-2">If you have an account, click here</a>
       </div>
