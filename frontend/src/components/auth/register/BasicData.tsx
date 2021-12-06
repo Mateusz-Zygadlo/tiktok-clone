@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Auth from '../layouts/Auth';
+import Auth from '../../layouts/Auth';
 
 interface UserData{
   nick: string,
@@ -8,7 +8,7 @@ interface UserData{
   passwordTwo: string,
 }
 
-const Register: React.FC = () => {
+const BasicData: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showPasswordTwo, setShowPasswordTwo] = useState<boolean>(false);
   const [userData, setUserData] = useState<UserData>({
@@ -60,4 +60,4 @@ const Register: React.FC = () => {
   )
 }
 
-export default Register;
+export default BasicData;

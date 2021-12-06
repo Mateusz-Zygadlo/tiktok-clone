@@ -1,4 +1,5 @@
 import React, { ReactChild, ReactChildren } from "react";
+import { Link } from 'react-router-dom';
 
 interface Children{
   children: ReactChild | ReactChildren,
@@ -12,7 +13,9 @@ const Auth: React.FC<Children> = ({ children }) => {
         <div className="bg-gray-200">
           <div className="w-full flex justify-between cursor-pointer">
             <span className="material-icons authSpan text-2xl">arrow_back_ios</span>
-            <span className="material-icons authSpan text-3xl">close</span>
+            <Link to='/'>
+              <span className="material-icons authSpan text-3xl">close</span>
+            </Link>
           </div>
           {children}
         </div>

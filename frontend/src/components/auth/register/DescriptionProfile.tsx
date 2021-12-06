@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Auth from '../layouts/Auth';
+import Auth from '../../layouts/Auth';
 
-const RegisterDetail: React.FC = () => {
+const DescriptionProfile: React.FC = () => {
   return(
     <Auth>
       <div className="flex justify-center items-center flex-col">
@@ -17,4 +17,4 @@ const RegisterDetail: React.FC = () => {
   )
 }
 
-export default RegisterDetail;
+export default DescriptionProfile;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Auth from '../layouts/Auth';
+import Auth from '../../layouts/Auth';
 import { yearsFunc, isLeapYear, daysFunc } from './utils/registerFuncs';
 
 interface UserData{
@@ -10,7 +10,7 @@ interface UserData{
   day: number
 }
 
-const MoreRegister: React.FC = () => {
+const PersonalData: React.FC = () => {
   const [years, setYears] = useState<number[] | []>([]);
   const [months, setMonths] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
   const [days, setDays] = useState<number[] | []>([]);
@@ -80,4 +80,4 @@ const MoreRegister: React.FC = () => {
   )
 }
 
-export default MoreRegister;
+export default PersonalData;

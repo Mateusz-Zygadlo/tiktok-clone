@@ -1,18 +1,17 @@
-import Register from './components/auth/Register';
-import MoreRegister from './components/auth/MoreRegister';
+import BasicData from './components/auth/register/BasicData';
 import Login from './components/auth/Login';
-import RegisterDetail from './components/auth/RegisterDetail';
-import RegisterImg from './components/auth/RegisterImg';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
 
 const App = () => {
   return(
-    <div className="my-20">
-      <Login />
-      <Register />
-      <MoreRegister />
-      <RegisterDetail />
-      <RegisterImg />
-    </div>
+    <BrowserRouter>
+      <Home />
+      <Routes>
+        <Route path="/register" element={<BasicData />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
