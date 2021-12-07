@@ -49,7 +49,7 @@ const ProfileImage: React.FC<ComponentProps> = ({ setActualComponentFunc, change
           {fileErr ? <p>Your file is too large</p> : null}
           <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('DescriptionProfile')}}>Next</button>
         </form>
-         <a href='/register' className="w-60 hover:underline pb-2">If you have an account, click here</a>
+         <a href='/login' className="w-60 hover:underline pb-2">If you have an account, click here</a>
       </div>
     </Auth>
   )

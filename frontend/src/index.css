@@ -23,6 +23,12 @@
   .authButton{
     @apply w-7/12 h-12 flex items-center justify-center mx-auto rounded-lg font-extrabold bg-red-500 hover:bg-red-600 text-white text-xl cursor-pointer mb-3 mt-5 transition-colors;
   }
+  .pRegister{
+    @apply text-sm font-semibold;
+  }
+  .flexDivRegister{
+    @apply w-full flex justify-between
+  }
 }
 
 @layer utilities {

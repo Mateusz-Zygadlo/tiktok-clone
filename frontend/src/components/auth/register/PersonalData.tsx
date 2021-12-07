@@ -2,21 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Auth from '../../layouts/Auth';
 import { yearsFunc, isLeapYear, daysFunc } from './utils/registerFuncs';
 
-interface UserData{
-  firstName: string,
-  lastName: string,
-  year: number,
-  month: number,
-  day: number
-}
-
 interface ComponentProps{
   setActualComponentFunc: (props: string) => void,
   changeUserData: (props: any) => void,
-  userData: any
+  userData: any,
+  getInputLength: any,
+  maxLength: any,
 }
 
-const PersonalData: React.FC<ComponentProps> = ({ setActualComponentFunc, changeUserData, userData}) => {
+const PersonalData: React.FC<ComponentProps> = ({ setActualComponentFunc, changeUserData, userData, getInputLength, maxLength}) => {
   const [years, setYears] = useState<number[] | []>([]);
   const [months, setMonths] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
   const [days, setDays] = useState<number[] | []>([]);
@@ -36,10 +30,16 @@ const PersonalData: React.FC<ComponentProps> = ({ setActualComponentFunc, change
       <div className="flex justify-center items-center flex-col">
         <h1 className="text-3xl font-semibold w-64 text-center mb-2">Personal Data</h1>
         <form>
-          <p className="text-sm font-semibold">first name</p>
-          <input type="text" name="firstName" onChange={changeUserData} value={userData.firstName} placeholder="Enter your First name" className="authInput textIndent" required />
-          <p className="text-sm font-semibold">last name</p>
-          <input type="email" name="lastName" onChange={changeUserData} value={userData.lastName} placeholder="Enter your Last name" className="authInput textIndent" required />
+          <div className="flexDivRegister">
+            <p className="pRegister">first name</p>
+            <p className="pRegister">[{maxLength.firstName}/30]</p>
+          </div>
+          <input type="text" name="firstName" onChange={getInputLength} value={userData.firstName} placeholder="Enter your First name" className="authInput textIndent" required />
+          <div className="flexDivRegister">
+            <p className="text-sm font-semibold">last name</p>
+            <p className="pRegister">[{maxLength.lastName}/30]</p>
+          </div>
+          <input type="email" name="lastName" onChange={getInputLength} value={userData.lastName} placeholder="Enter your Last name" className="authInput textIndent" required />
           <div className="flex justify-around text-sm font-semibold">
             <p>year</p>
             <p>month</p>
@@ -64,7 +64,7 @@ const PersonalData: React.FC<ComponentProps> = ({ setActualComponentFunc, change
           </div>
           <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('ProfileImage')}}>Next</button>
         </form>
-         <a href='/register' className="w-60 hover:underline pb-2">If you have an account, click here</a>
+         <a href='/login' className="w-60 hover:underline pb-2">If you have an account, click here</a>
       </div>
     </Auth>
   )

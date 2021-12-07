@@ -33,6 +33,18 @@ const Register = () => {
     picture: '',
     description: '',
   });
+  const [maxLength, setMaxLength] = useState<any>({
+    nick: 0,
+    email: 0,
+    password: 0,
+    passwordTwo: 0,
+    firstName: 0,
+    lastName: 0,
+    description: 0,
+  });
+  const [repeatPassword, setRepeatPassword] = useState<any>({
+    passwordTwo: '',
+  });
   const history = useNavigate();
   const setActualComponentFunc = (props: string) => {
     if(props == 'close'){
@@ -49,23 +61,71 @@ const Register = () => {
     setUserData({...userData, "picture": props});
   }
 
+  const getInputLength = (e: any) => {
+    const { name, value } = e.target;
+    switch(name){
+      case 'nick': 
+        if(value.length < 21){
+          changeUserData(e); 
+          setMaxLength({...maxLength, [name]: value.length});
+        }
+        break;
+      case 'firstName':
+      case 'lastName':
+        if(value.length < 31){
+          changeUserData(e); 
+          setMaxLength({...maxLength, [name]: value.length});
+        }
+        break;
+      case 'email':
+      case 'password':
+        if(value.length < 41){
+          changeUserData(e); 
+          setMaxLength({...maxLength, [name]: value.length});
+        }
+        break;
+      case 'description':
+        if(value.length < 101){
+          changeUserData(e); 
+          setMaxLength({...maxLength, [name]: value.length});
+        }
+        break;
+    }
+  }
+
+  const repeatPasswordFunc = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target as HTMLInputElement;
+    if(value.length < 41){
+      changeUserData(e); 
+      setMaxLength({...maxLength, [name]: value.length});
+      setRepeatPassword({...repeatPassword, [name]: value});
+    }
+  }
+
   return(
     <>
       {actualComponent == 'BasicData' ? 
         <BasicData 
           setActualComponentFunc={setActualComponentFunc}
-          changeUserData={changeUserData}
-          userData={userData} />
+          userData={userData}
+          maxLength={maxLength}
+          getInputLength={getInputLength}
+          repeatPasswordFunc={repeatPasswordFunc}
+          repeatPassword={repeatPassword} />
       : actualComponent == 'DescriptionProfile' ? 
         <DescriptionProfile 
           setActualComponentFunc={setActualComponentFunc}
           changeUserData={changeUserData}
-          userData={userData} />
+          userData={userData}
+          getInputLength={getInputLength}
+          maxLength={maxLength} />
       : actualComponent == 'PersonalData' ? 
         <PersonalData 
           setActualComponentFunc={setActualComponentFunc}
           changeUserData={changeUserData}
-          userData={userData} />
+          userData={userData}
+          getInputLength={getInputLength}
+          maxLength={maxLength} />
       : actualComponent == 'ProfileImage' ?
         <ProfileImage 
           setActualComponentFunc={setActualComponentFunc}
