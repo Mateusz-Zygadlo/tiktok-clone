@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Auth from '../../layouts/Auth';
 
 interface ComponentProps{
   setActualComponentFunc: (props: string) => void,
+  changeUserProfile: (props: any) => void,
+  userData: any
 }
 
-const ProfileImage: React.FC<ComponentProps> = ({ setActualComponentFunc }) => {
+const ProfileImage: React.FC<ComponentProps> = ({ setActualComponentFunc, changeUserProfile, userData }) => {
   const [previewImage, setPreviewImage] = useState<any>(null);
   const [fileErr, setFileErr] = useState<boolean>(false);
 
-  const [userData, setUserData] = useState<any>();
-
   const changeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files }: any = e.target as HTMLInputElement;
-    setUserData(files[0]);
+    changeUserProfile(files[0]);
 
     if(files[0].size < 500000){
+      console.log(files[0])
       setFileErr(false);
       const objectUrl = URL.createObjectURL(files[0])
       return setPreviewImage(objectUrl);
@@ -27,8 +28,14 @@ const ProfileImage: React.FC<ComponentProps> = ({ setActualComponentFunc }) => {
     console.log('Your file is too large');
   }
 
+  useEffect(() => {
+    if(userData.picture){
+      setPreviewImage(URL.createObjectURL(userData.picture));
+    }
+  }, [])
+
   return(
-    <Auth>
+    <Auth componentName="PersonalData" setActualComponentFunc={setActualComponentFunc}>
       <div className="flex justify-center items-center flex-col">
         <h1 className="text-3xl font-semibold w-64 text-center mb-2">Next step</h1>
         <form>

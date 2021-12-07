@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Auth from '../layouts/Auth';
 
 interface UserData{
@@ -12,6 +13,7 @@ const Login: React.FC = () => {
     email: '',
     password: '',
   })
+  const history = useNavigate();
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
   const changeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,8 +26,12 @@ const Login: React.FC = () => {
     return setUserData({email: '', password: ''})
   }
 
+  const setActualComponentFunc = () => {
+    return history('/');
+  }
+
   return(
-    <Auth>
+    <Auth componentName="close" setActualComponentFunc={setActualComponentFunc}>
       <div className="flex justify-center items-center flex-col">
         <h1 className="text-3xl font-semibold w-64 text-center mb-2">Login to TikTok clone</h1>
         <form onSubmit={submitUserData}>
