@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
-const UserSchema = new Schema({
+const ImageSchema = new Schema({
   nick: {
     type: 'string',
     required: true,
@@ -65,5 +65,5 @@ const UserSchema = new Schema({
   }
 })
 
-const User = mongoose.model<any>('User', UserSchema);
-export default User;
+const Image = mongoose.model<any>('Image', ImageSchema);
+export default Image;
