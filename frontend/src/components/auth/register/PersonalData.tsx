@@ -39,7 +39,7 @@ const PersonalData: React.FC<ComponentProps> = ({ setActualComponentFunc, change
             <p className="text-sm font-semibold">last name</p>
             <p className="pRegister">[{maxLength.lastName}/30]</p>
           </div>
-          <input type="email" name="lastName" onChange={getInputLength} value={userData.lastName} placeholder="Enter your Last name" className="authInput textIndent" required />
+          <input type="text" name="lastName" onChange={getInputLength} value={userData.lastName} placeholder="Enter your Last name" className="authInput textIndent" required />
           <div className="flex justify-around text-sm font-semibold">
             <p>year</p>
             <p>month</p>
@@ -62,7 +62,11 @@ const PersonalData: React.FC<ComponentProps> = ({ setActualComponentFunc, change
               )}
             </select>
           </div>
-          <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('ProfileImage')}}>Next</button>
+          {userData.firstName && userData.lastName ? 
+            <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('ProfileImage')}}>Next</button>
+          :
+            <button type="submit" className="authButton bg-black text-white hover:bg-black">I'm waiting</button>
+          }
         </form>
          <a href='/login' className="w-60 hover:underline pb-2">If you have an account, click here</a>
       </div>

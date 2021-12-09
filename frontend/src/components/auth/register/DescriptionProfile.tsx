@@ -19,7 +19,11 @@ const DescriptionProfile: React.FC<ComponentProps> = ({ setActualComponentFunc, 
             <p className="pRegister">[{maxLength.description}/100]</p>
           </div>
           <textarea onChange={getInputLength} value={userData.description} name="description" placeholder="Description profile" className="authInput textIndent px-1 h-40" required></textarea>
-          <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc("Result")}}>Next</button>
+          {userData.description ? 
+            <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc("Result")}}>Next</button>
+          :
+          <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc("Result")}}>Skip</button>
+          }
         </form>
          <a href='/login' className="w-60 hover:underline pb-2">If you have an account, click here</a>
       </div>

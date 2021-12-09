@@ -4,7 +4,8 @@ import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 
 import homeRoutes from './routes/home';
-import authRouter from './routes/auth';
+import authRoutes from './routes/auth';
+import photosRoutes from './routes/photos';
 
 require('dotenv').config();
 
@@ -30,6 +31,7 @@ app.use(
 )
 
 app.use('/', homeRoutes);
-app.use('/auth', authRouter);
+app.use('/auth', authRoutes);
+app.use('/photos', photosRoutes);
 
 app.listen(port, () => console.log('api works'))

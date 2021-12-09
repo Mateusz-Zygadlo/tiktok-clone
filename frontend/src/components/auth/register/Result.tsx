@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Auth from '../../layouts/Auth';
+import axios from 'axios';
 
 interface ComponentProps{
   setActualComponentFunc: (props: string) => void,
@@ -13,9 +14,34 @@ const Result: React.FC<ComponentProps> = ({ setActualComponentFunc, userData }) 
       setPreviewImage(URL.createObjectURL(userData.picture));
     }
   }
+  const createAccount = async () => {
+    return await axios.post('http://localhost:8000/auth/new', {userData})
+      .then((res) => {
+        console.log(res.data)
+        sendPhotos();
+      })
+      .catch((err) => console.log('error from server'))
+  }
+  let file = userData.picture;
+  let formdata = new FormData();
+  formdata.append('image', file);
+
+  const sendPhotos = async () => {
+    const url = 'http://localhost:8000/photos/new';
+    const formData = new FormData();
+    formData.append('file', userData.picture);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }
+
+    return axios.post(url, {formData}, config);
+  }
 
   useEffect(() => {
     createFakeUrl(userData);
+    console.log(userData.picture);
   }, [userData]);
 
   return(
@@ -33,7 +59,7 @@ const Result: React.FC<ComponentProps> = ({ setActualComponentFunc, userData }) 
           <div className="w-64">
             <p className="text-lg font-semibold mt-2 break-words">{userData.description}</p>
           </div>
-          <button type="submit" className="authButton">Create</button>
+          <button type="submit" className="authButton" onClick={createAccount}>Create</button>
         </div>
         <a href='/login' className="w-60 hover:underline pb-2">If you have an account, click here</a>
       </div>

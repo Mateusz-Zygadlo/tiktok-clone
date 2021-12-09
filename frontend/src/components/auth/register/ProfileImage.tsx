@@ -4,7 +4,7 @@ import Auth from '../../layouts/Auth';
 interface ComponentProps{
   setActualComponentFunc: (props: string) => void,
   changeUserProfile: (props: any) => void,
-  userData: any
+  userData: any,
 }
 
 const ProfileImage: React.FC<ComponentProps> = ({ setActualComponentFunc, changeUserProfile, userData }) => {
@@ -16,7 +16,6 @@ const ProfileImage: React.FC<ComponentProps> = ({ setActualComponentFunc, change
     changeUserProfile(files[0]);
 
     if(files[0].size < 500000){
-      console.log(files[0])
       setFileErr(false);
       const objectUrl = URL.createObjectURL(files[0])
       return setPreviewImage(objectUrl);
@@ -47,7 +46,11 @@ const ProfileImage: React.FC<ComponentProps> = ({ setActualComponentFunc, change
             <img src={previewImage} alt="img" className="w-64 h-64 mt-3 bg-white" />
           ): null}
           {fileErr ? <p>Your file is too large</p> : null}
-          <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('DescriptionProfile')}}>Next</button>
+          {userData.picture ? 
+            <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('DescriptionProfile')}}>Next</button>
+            :
+            <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('DescriptionProfile')}}>Skip</button>
+          }
         </form>
          <a href='/login' className="w-60 hover:underline pb-2">If you have an account, click here</a>
       </div>

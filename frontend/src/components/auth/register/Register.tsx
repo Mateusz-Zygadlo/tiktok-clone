@@ -27,9 +27,9 @@ const Register = () => {
     password: '',
     firstName: '',
     lastName: '',
-    year: 0,
-    month: 0,
-    day: 0,
+    year: 2000,
+    month: 9,
+    day: 13,
     picture: '',
     description: '',
   });
@@ -101,6 +101,9 @@ const Register = () => {
       setRepeatPassword({...repeatPassword, [name]: value});
     }
   }
+
+  const formData = new FormData();
+  formData.append('photo', userData.picture);
 
   return(
     <>

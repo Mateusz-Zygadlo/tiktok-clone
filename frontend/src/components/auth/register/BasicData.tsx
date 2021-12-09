@@ -32,7 +32,7 @@ const BasicData: React.FC<ComponentProps> = ({ setActualComponentFunc, userData,
           console.log(res.data)
           setNextStep(true);
       }).catch((err) => {
-        console.log('error from server ' + err)
+        setExistNick(true);
       })
     }else{
       setIncorrectRepeatPassword(true);
@@ -76,7 +76,7 @@ const BasicData: React.FC<ComponentProps> = ({ setActualComponentFunc, userData,
           {nextStep ? (
             <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('PersonalData')}}>Next</button>
           ):
-            <button type="submit" className="authButton">Check</button>
+            <button type="submit" className="authButton bg-black text-white hover:bg-black">Check</button>
           }
         </form>
         <a href='/login' className="w-60 hover:underline pb-2">If you have an account, click here</a>
