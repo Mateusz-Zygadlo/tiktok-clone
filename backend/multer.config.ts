@@ -5,7 +5,7 @@ export const storage = multer.diskStorage({
     cb(null, 'public')
   },
   filename: (req: any, file: any, cb: any) => {
-    cb(null, Date.now() + '-' + file.originalname);
+    cb(null, `public-${Date.now()}-${file.originalname}`);
   }
 })
-export const upload = multer({storage: storage}).single('file');
+export const upload = multer({storage: storage});

@@ -62,6 +62,10 @@ const UserSchema = new Schema({
   yearOfBirth: {
     type: 'string',
     required: true,
+  },
+  picture: {
+    type: "string",
+    required: true,
   }
 })
 

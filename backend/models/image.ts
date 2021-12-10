@@ -9,6 +9,10 @@ const ImageSchema = new Schema({
   name: {
     type: 'string',
     required: true,
+  },
+  path: {
+    type: 'string',
+    required: true,
   }
 })
 

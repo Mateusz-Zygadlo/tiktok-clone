@@ -26,7 +26,8 @@ export const newAccount = [
       comments: [],
       privateAccount: false,
       dateOfBirth: `${year}-${month}-${day}`,
-      yearOfBirth: `${year}`
+      yearOfBirth: `${year}`,
+      picture: req.body.imageName,
     }).save((err: any) => {
       if(err){
         return next(err);
