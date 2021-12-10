@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 import homeRoutes from './routes/home';
 import authRoutes from './routes/auth';
-import photosRoutes from './routes/photos';
+import imageRoutes from './routes/image';
 
 require('dotenv').config();
 
@@ -32,6 +32,6 @@ app.use(
 
 app.use('/', homeRoutes);
 app.use('/auth', authRoutes);
-app.use('/photos', photosRoutes);
+app.use('/image', imageRoutes);
 
 app.listen(port, () => console.log('api works'))
