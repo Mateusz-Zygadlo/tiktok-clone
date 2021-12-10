@@ -1,4 +1,23 @@
-import mongoose from 'mongoose';
+import mongoose, {Document} from 'mongoose';
+
+interface IUser extends Document {
+  email: string,
+  password: string,
+  nick: string,
+  firstName: string,
+  lastName: string,
+  description: string,
+  following: any,
+  followers: any,
+  videos: any,
+  allProfileLikes: number,
+  videoLikes: any,
+  comments: any,
+  privateAccount: boolean,
+  dateOfBirth: string,
+  yearOfBirth: string,
+  picture: string,
+}
 
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
@@ -6,6 +25,7 @@ const UserSchema = new Schema({
     type: 'string',
     required: true,
     maxLength: 50,
+    unique: true,
   },
   firstName: {
     type: 'string',
@@ -22,6 +42,7 @@ const UserSchema = new Schema({
   email: {
     type: 'string',
     required: true,
+    unique: true,
   },
   password: {
     type: 'string',
@@ -69,5 +90,5 @@ const UserSchema = new Schema({
   }
 })
 
-const User = mongoose.model<any>('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 export default User;

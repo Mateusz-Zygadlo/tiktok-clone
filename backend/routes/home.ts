@@ -1,5 +1,6 @@
 import express from 'express';
 import type { Request, Response } from 'express';
+import User from '../models/user';
 
 const router = express.Router();
 
@@ -8,15 +9,25 @@ router.get('/', (req: Request, res: Response) => {
     success: "api works ['/']"
   })
 })
-router.post('/isExist', (req: Request, res: Response) => {
-  const { email, nick } = req.body;
+router.post('/uniqueEmail', async (req: Request, res: Response) => {
+  const { email } = req.body;
+  const uniqueEmail = await User.findOne({email: email});
 
-  if(nick == '123'){
+  if(uniqueEmail != null){
     return res.sendStatus(403);
   }
-
   return res.json({
     email,
+  })
+})
+router.post('/uniqueNick', async (req: Request, res: Response) => {
+  const { nick } = req.body;
+  const uniqueNick = await User.findOne({ nick: nick });
+
+  if(uniqueNick != null){
+    return res.sendStatus(403);
+  }
+  return res.json({
     nick,
   })
 })
