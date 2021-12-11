@@ -48,7 +48,7 @@ const Register = () => {
   const history = useNavigate();
   const setActualComponentFunc = (props: string) => {
     if(props == 'close'){
-      return history('/');
+      return history('/', {replace: true});
     }
     setActualComponent(props);
   }
@@ -106,7 +106,7 @@ const Register = () => {
   formData.append('photo', userData.picture);
 
   return(
-    <>
+    <div className="absolute top-5 w-full h-full">
       {actualComponent == 'BasicData' ? 
         <BasicData 
           setActualComponentFunc={setActualComponentFunc}
@@ -139,7 +139,7 @@ const Register = () => {
           setActualComponentFunc={setActualComponentFunc}
           userData={userData} />
       : null}
-    </>
+    </div>
   )
 }
 

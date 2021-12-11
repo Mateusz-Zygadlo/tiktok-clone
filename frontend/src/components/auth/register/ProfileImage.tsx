@@ -26,6 +26,10 @@ const ProfileImage: React.FC<ComponentProps> = ({ setActualComponentFunc, change
     }
     console.log('Your file is too large');
   }
+  const deleteImage = () => {
+    setPreviewImage(null);
+    changeUserProfile(null);
+  }
 
   useEffect(() => {
     if(userData.picture){
@@ -40,10 +44,13 @@ const ProfileImage: React.FC<ComponentProps> = ({ setActualComponentFunc, change
         <form>
           <>
             <p className="text-sm font-semibold mb-2">select a profile picture [max: 0.5mb]</p>
-            <input type="file" name="img" accept="image/*" required onChange={changeInputValue} />
+            <input type="file" name="img" accept=".jpg, .png" required onChange={changeInputValue} />
           </>
           {previewImage ? (
-            <img src={previewImage} alt="img" className="w-64 h-64 mt-3 bg-white" />
+            <>
+              <img src={previewImage} alt="img" className="w-64 h-64 mt-3 bg-white mx-auto" />
+              <button className="font-semibold" onClick={deleteImage}>delete image</button>
+            </>
           ): null}
           {fileErr ? <p>Your file is too large</p> : null}
           {userData.picture ? 

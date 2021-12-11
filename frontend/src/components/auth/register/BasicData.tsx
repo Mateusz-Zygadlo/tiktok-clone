@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Auth from '../../layouts/Auth';
 import axios from 'axios';
 
@@ -27,17 +27,31 @@ const BasicData: React.FC<ComponentProps> = ({ setActualComponentFunc, userData,
 
     if(nick && email && password == passwordTwo){
       setIncorrectRepeatPassword(false);
-      axios.post('http://localhost:8000/isExist', {email: userData.email, nick: userData.nick})
-        .then((res) => {
-          console.log(res.data)
-          setNextStep(true);
-      }).catch((err) => {
-        setExistNick(true);
-      })
+      checkEmail();
+      checkNick();
+      setNextStep(true);
     }else{
       setIncorrectRepeatPassword(true);
     }
+    console.log(true);
   }
+  const checkEmail = async () => {
+    await axios.post('http://localhost:8000/uniqueEmail', {email: userData.email})
+        .then((res) => {
+          setExistEmail(false);
+      }).catch((err) => {
+        setExistEmail(true);
+      })
+  }
+  const checkNick = async () => {
+    await axios.post('http://localhost:8000/uniqueNick', {nick: userData.nick})
+      .then((res) => setExistNick(false))
+      .catch((err) => setExistNick(true));
+  }
+
+  useEffect(() => {
+    setNextStep(false);
+  }, [userData.email, userData.nick, userData.password, userData.passwordTwo]);
 
   return(
     <Auth componentName="close" setActualComponentFunc={setActualComponentFunc}>
@@ -49,13 +63,13 @@ const BasicData: React.FC<ComponentProps> = ({ setActualComponentFunc, userData,
             <p className="pRegister">[{maxLength.nick}/20]</p>
           </div>
           <input type="text" name="nick" value={userData.nick} onChange={getInputLength} placeholder="Enter your Nick" className={`authInput textIndent ${existNick ? 'border-red-300': null}`} required />
-          {existNick && <p className="text-red-300 font-semibold">nick unavailable</p>}
+          {existNick && <p className="text-red-300 font-semibold">nick already exists</p>}
           <div className="flexDivRegister">
             <p className="pRegister">email</p>
             <p className="pRegister">[{maxLength.email}/40]</p>
           </div>
           <input type="email" name="email" value={userData.email} onChange={getInputLength} placeholder="Enter your Email" className={`authInput textIndent ${existEmail ? 'border-red-300': null}`} required />
-          {existEmail && <p className="text-red-300 font-semibold">email unavailable</p>}
+          {existEmail && <p className="text-red-300 font-semibold">email already exists</p>}
           <div className="flexDivRegister"> 
             <p className="pRegister">password</p>
             <p className="pRegister">[{maxLength.password}/40]</p>
@@ -73,7 +87,7 @@ const BasicData: React.FC<ComponentProps> = ({ setActualComponentFunc, userData,
             <span className="material-icons mt-2 -ml-10 cursor-pointer z-20" onClick={()=>{setShowPasswordTwo(!showPasswordTwo)}}>{showPasswordTwo ? "visibility" : "visibility_off"}</span>
           </div>
           {incorrectRepeatPassword && <p className="text-red-300 font-semibold">incorrectly repeated password</p>}
-          {nextStep ? (
+          {!existEmail && !existNick && nextStep ? (
             <button type="submit" className="authButton" onClick={()=>{setActualComponentFunc('PersonalData')}}>Next</button>
           ):
             <button type="submit" className="authButton bg-black text-white hover:bg-black">Check</button>

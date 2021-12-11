@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Auth from '../../layouts/Auth';
 import axios from 'axios';
 
@@ -9,6 +10,7 @@ interface ComponentProps{
 
 const Result: React.FC<ComponentProps> = ({ setActualComponentFunc, userData }) => {
   const [previewImage, setPreviewImage] = useState<any>(null);
+  const history = useNavigate();
   const createFakeUrl = (userData: any) => {
     if(userData.picture){
       setPreviewImage(URL.createObjectURL(userData.picture));
@@ -17,7 +19,9 @@ const Result: React.FC<ComponentProps> = ({ setActualComponentFunc, userData }) 
   const createAccount = async (imageName: any) => {
     return await axios.post('http://localhost:8000/auth/new', {userData, imageName})
       .then((res) => {
-        console.log(res.data);
+        if(res && res.data){
+          return history('/', {replace: true})
+        }
       })
       .catch((err) => console.log('error from server'))
   }
@@ -46,8 +50,8 @@ const Result: React.FC<ComponentProps> = ({ setActualComponentFunc, userData }) 
           }
           <h1 className="text-2xl font-extrabold">{userData.nick}</h1>
           <h2 className="text-md">[{userData.firstName} {userData.lastName}]</h2>
-          <div className="w-64">
-            <p className="text-lg font-semibold mt-2 break-words">{userData.description}</p>
+          <div className="w-64 flex justify-center">
+            <p className="text-lg font-semibold mt-2 break-words text-center">{userData.description}</p>
           </div>
           <button type="submit" className="authButton" onClick={sendFile}>Create</button>
         </div>
