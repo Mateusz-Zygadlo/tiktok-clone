@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import User from '../models/user';
 import jwt from 'jsonwebtoken';
-import { keys } from '../jwtToken';
+import { keys } from '../keys/jwtToken';
 
 export const newAccount = [
   async (req: Request, res: Response, next: NextFunction) => {
