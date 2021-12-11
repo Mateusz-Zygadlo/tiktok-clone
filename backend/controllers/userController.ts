@@ -10,8 +10,6 @@ export const newAccount = [
     let {email} = req.body.userData;
     email = email.toLowerCase();
 
-    console.log(req.body);
-
     const hashPassword = await bcrypt.hash(password, 10);
     const user = new User({
       nick,

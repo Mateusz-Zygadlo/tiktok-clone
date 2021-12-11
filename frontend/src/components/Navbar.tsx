@@ -3,7 +3,7 @@ import useWindowSize from '../hooks/useWindowSize';
 import tune from '../assets/tune.svg';
 
 interface Props{
-  userImageProfile?: any
+  userImageProfile: null,
 }
 
 const Navbar: React.FC<Props> = ({ userImageProfile }) => {
@@ -16,21 +16,21 @@ const Navbar: React.FC<Props> = ({ userImageProfile }) => {
   const profileLeaveFunc = () => {
     setTimeout(() => {
       profileLeave && setProfileLeave(false)
-    }, 1000)
+    }, 500)
   };
 
   const viewMoreMoveFunc = () => !viewMoreLeave && setViewMoreLeave(true);
   const viewMoreLeaveFunc = () => {
     setTimeout(() => {
       viewMoreLeave && setViewMoreLeave(false);
-    }, 1000)
+    }, 500)
   }
  
   const toggleOpenProfile = () => setOpenProfile(!openProfile);
   
   return(
-    <div className="w-full flex justify-between items-center xl:px-24 p-2">
-      <div className="flex items-center cursor-pointer" title="home">
+    <div className="w-full h-14 flex justify-between items-center bg-white">
+      <div className="flex items-center cursor-pointer pl-3" title="home">
         <img src={tune} alt="a hand-drawn note in a photopea" />
         <p className="text-2xl font-extrabold">TikTok</p>
       </div>
@@ -44,20 +44,21 @@ const Navbar: React.FC<Props> = ({ userImageProfile }) => {
         {userImageProfile ? 
           <>
             <span className="material-icons cursor-pointer hover:text-red-300" title="upload video">upload_file</span>
-            <img src={userImageProfile || ''} alt="user profile" className="w-10 h-10 rounded-full ml-2" onMouseMove={profileMoveFunc} onMouseLeave={profileLeaveFunc} onClick={toggleOpenProfile} />
+            <img src={userImageProfile || ''} alt="user profile" className="w-10 h-10 rounded-full mx-2" onMouseMove={profileMoveFunc} onMouseLeave={profileLeaveFunc} onClick={toggleOpenProfile} />
             {(size.width > 800 && profileLeave || viewMoreLeave) || size.width < 800 && openProfile ? (
               <div className="w-40 bg-white border-2 border-black absolute top-14 right-2 xl:right-24 p-2" onMouseMove={viewMoreMoveFunc} onMouseLeave={viewMoreLeaveFunc}>
                 <div className="flex px-2 py-1 mb-1 cursor-pointer hover:bg-gray-100">
                   <span className="material-icons mr-2">face</span>
                   <p className="font-semibold">View profile</p>
                 </div>
-                <div className="flex px-2 py-1 mb-2 cursor-pointer hover:bg-gray-100">
+                <div className="flex px-2 py-1 cursor-pointer hover:bg-gray-100">
                   <span className="material-icons mr-2">psychology</span>
                   <p className="font-semibold">Settings</p>
                 </div>
-                <div className="flex items-center justify-center px-2 py-2 cursor-pointer border-t-2 border-black hover:bg-gray-100">
+                <div className="border-t-2 border-black w-full my-2"></div>
+                <div className="flex items-center justify-center pb-2 py-2 cursor-pointer hover:bg-gray-100">
                   <span className="material-icons mr-2">logout</span>
-                  <p className="font-semibold">Logout</p>
+                  <a href='/logout' className="font-semibold">Logout</a>
                 </div>
               </div>
             ): null}

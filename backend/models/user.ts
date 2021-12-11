@@ -37,7 +37,7 @@ const UserSchema = new Schema({
   },
   description: {
     type: 'string',
-    required: true,
+    required: false,
   },
   email: {
     type: 'string',
@@ -86,7 +86,7 @@ const UserSchema = new Schema({
   },
   picture: {
     type: "string",
-    required: true,
+    default: "http://localhost:8000/public-1639159844793-149-1495532_gwent-tracker-home-good-profile-picture-for-discord.png",
   }
 })
 
