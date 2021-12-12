@@ -1,14 +1,18 @@
+import React from 'react';
 import useDecodeUser from "../hooks/useDecodeUser";
 import useWindowSize from '../hooks/useWindowSize';
-import SmallProfile from "./home/SmallProfile";
+import SmallProfile from "./base/SmallProfile";
 
-const Leftbar = () => {
-  const user = useDecodeUser();
+interface Props{
+  user: any,
+}
+
+const Leftbar: React.FC<Props> = ({ user }) => {
   const size = useWindowSize();
   const mobileWidth: number = 1050;
 
   return(
-    <div className={`${size.width > 1050 ? 'w-72' : 'w-16 flex flex-col items-center'} leftbarHeightCalc pl-3 pb-5 overflow-y-auto overflow-x-hidden`}>
+    <div className={`${size.width > 1050 ? 'w-72' : 'w-16 flex flex-col items-center'} leftbarHeightCalc pl-3 pb-5 overflow-y-auto overflow-x-hidden fixed top-14 left-0 bg-white`}>
       <div className="mt-3 pb-1">
         <div className="flex items-center hover:bg-gray-100 p-2 cursor-pointer transition-colors">
           <span className="material-icons text-3xl">bed</span>
@@ -20,12 +24,6 @@ const Leftbar = () => {
           <span className="material-icons text-3xl">sentiment_satisfied_alt</span>
           {size.width > mobileWidth && (
             <p className="text-xl ml-3 font-semibold">Following</p>
-          )}
-        </div>
-        <div className="flex items-center hover:bg-gray-100 p-2 cursor-pointer transition-colors">
-          <span className="material-icons text-3xl">settings_input_antenna</span>
-          {size.width > mobileWidth && (
-            <p className="text-xl ml-3 font-semibold">Live</p>
           )}
         </div>
       </div>
@@ -53,100 +51,10 @@ const Leftbar = () => {
         {user && (
           <>
             <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
-            <SmallProfile
-            profileLink={user.picture}
-            nick={user.nick}
-            firstName={user.firstName}
-            lastName={user.lastName} />
+              profileLink={user.picture}
+              nick={user.nick}
+              firstName={user.firstName}
+              lastName={user.lastName} />
           </>
         )}
         {size.width > mobileWidth && (

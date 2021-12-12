@@ -1,14 +1,9 @@
-import Navbar from '../components/Navbar';
-import useDecodeUser from '../hooks/useDecodeUser';
+import Base from '../components/layouts/Base';
 
 const Settings = () => {
-  const user = useDecodeUser();
-
   return(
-    <div className="xl:px-24">
-      {user && user.picture ? <Navbar userImageProfile={user.picture} />
-      : <Navbar userImageProfile={null} />}
-      <div className="w-28.125 mx-auto mt-5 p-2">
+    <Base removeLeftbar={true}>
+      <div className="mt-3">
         <h1 className="text-3xl">Manage account</h1>
         <div className="p-2">
           <h2 className="text-xl">Account control</h2>
@@ -28,7 +23,7 @@ const Settings = () => {
         </div>
         <a href="/profile" className="text-xl border-b-2 hover:border-black transition-colors">Back</a>
       </div>
-    </div>
+    </Base>
   )
 }
 

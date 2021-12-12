@@ -58,6 +58,9 @@
     justify-content: center;
     grid-gap: 1px;
   }
+  .homeVideoSize{
+    aspect-ratio: 9/16;
+  }
   .videoSize{
     width: 100%;
     aspect-ratio: 9/16;

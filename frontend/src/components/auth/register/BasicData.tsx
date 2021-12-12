@@ -21,7 +21,7 @@ const BasicData: React.FC<ComponentProps> = ({ setActualComponentFunc, userData,
   
   const [nextStep, setNextStep] = useState<boolean>(false);
 
-  const isUnique = (e: any) => {
+  const isUnique = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { nick, email, password, passwordTwo } = userData;
 

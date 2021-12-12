@@ -3,10 +3,10 @@ import useWindowSize from '../hooks/useWindowSize';
 import tune from '../assets/tune.svg';
 
 interface Props{
-  userImageProfile: null,
+  user: any,
 }
 
-const Navbar: React.FC<Props> = ({ userImageProfile }) => {
+const Navbar: React.FC<Props> = ({ user }) => {
   const [profileLeave, setProfileLeave] = useState<boolean>(false);
   const [viewMoreLeave, setViewMoreLeave] = useState<boolean>(false);
   const [openProfile, setOpenProfile] = useState<boolean>(false);
@@ -29,7 +29,7 @@ const Navbar: React.FC<Props> = ({ userImageProfile }) => {
   const toggleOpenProfile = () => setOpenProfile(!openProfile);
   
   return(
-    <div className="w-full h-14 flex justify-between items-center bg-white">
+    <div className="w-full h-14 flex justify-between items-center bg-white fixed top-0 left-0">
       <div className="flex items-center cursor-pointer pl-3" title="home">
         <img src={tune} alt="a hand-drawn note in a photopea" />
         <p className="text-2xl font-extrabold">TikTok</p>
@@ -41,10 +41,10 @@ const Navbar: React.FC<Props> = ({ userImageProfile }) => {
         </div>
       ): null}
       <div className="flex items-center">
-        {userImageProfile ? 
+        {user && user.picture ? 
           <>
             <span className="material-icons cursor-pointer hover:text-red-300" title="upload video">upload_file</span>
-            <img src={userImageProfile || ''} alt="user profile" className="w-10 h-10 rounded-full mx-2" onMouseMove={profileMoveFunc} onMouseLeave={profileLeaveFunc} onClick={toggleOpenProfile} />
+            <img src={user.picture || ''} alt="user profile" className="w-10 h-10 rounded-full mx-2" onMouseMove={profileMoveFunc} onMouseLeave={profileLeaveFunc} onClick={toggleOpenProfile} />
             {(size.width > 800 && profileLeave || viewMoreLeave) || size.width < 800 && openProfile ? (
               <div className="w-40 bg-white border-2 border-black absolute top-14 right-2 xl:right-24 p-2" onMouseMove={viewMoreMoveFunc} onMouseLeave={viewMoreLeaveFunc}>
                 <div className="flex px-2 py-1 mb-1 cursor-pointer hover:bg-gray-100">
