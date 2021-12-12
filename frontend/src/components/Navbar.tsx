@@ -49,11 +49,11 @@ const Navbar: React.FC<Props> = ({ userImageProfile }) => {
               <div className="w-40 bg-white border-2 border-black absolute top-14 right-2 xl:right-24 p-2" onMouseMove={viewMoreMoveFunc} onMouseLeave={viewMoreLeaveFunc}>
                 <div className="flex px-2 py-1 mb-1 cursor-pointer hover:bg-gray-100">
                   <span className="material-icons mr-2">face</span>
-                  <p className="font-semibold">View profile</p>
+                  <a href='/profile' className="font-semibold">View profile</a>
                 </div>
                 <div className="flex px-2 py-1 cursor-pointer hover:bg-gray-100">
                   <span className="material-icons mr-2">psychology</span>
-                  <p className="font-semibold">Settings</p>
+                  <a href='/settings' className="font-semibold">Settings</a>
                 </div>
                 <div className="border-t-2 border-black w-full my-2"></div>
                 <div className="flex items-center justify-center pb-2 py-2 cursor-pointer hover:bg-gray-100">
