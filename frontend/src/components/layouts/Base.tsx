@@ -12,7 +12,7 @@ const Base: React.FC<Props> = ({ children, removeLeftbar }) => {
   const user = useDecodeUser();
 
   return(
-    <div className="xl:px-24">
+    <div className="md:px-24">
       <Navbar user={user} />
       <div className="flex">
         {!removeLeftbar && (

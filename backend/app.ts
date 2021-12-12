@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
 import homeRoutes from './routes/home';
@@ -19,6 +20,7 @@ db.on("error", console.error.bind(console, "mongo connection error"));
 const app = express();
 
 app.use(cookieParser());
+app.use(bodyParser());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.static('public'));

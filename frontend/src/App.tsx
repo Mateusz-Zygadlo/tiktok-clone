@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Logout from './pages/Logout';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import Video from './pages/Video';
 
 const App = () => {
   return(
@@ -16,6 +17,7 @@ const App = () => {
         <Route path='/logout' element={<Logout />} />
         <Route path="/profile" element={<Profile />} />
         <Route path='/settings' element={<Settings />} />
+        <Route path='/video/:id' element={<Video />} />
       </Routes>
     </BrowserRouter>
   )

@@ -58,6 +58,13 @@
     justify-content: center;
     grid-gap: 1px;
   }
+  .widthVideoPage{
+    width: 500px;
+  }
+  .gridVideoPage{
+    display: grid;
+    grid-template-columns: 1fr 500px;
+  }
   .homeVideoSize{
     aspect-ratio: 9/16;
   }
