@@ -47,4 +47,19 @@
   .leftbarHeightCalc{
     height: calc(100vh - 56px);
   }
+  .profileWidth{
+    width: 600px;
+  }
+  .gridProfileVideos{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 190px);
+    grid-auto-rows: auto;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 1px;
+  }
+  .videoSize{
+    width: 100%;
+    aspect-ratio: 9/16;
+  }
 }
