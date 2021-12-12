@@ -9,6 +9,7 @@ router.get('/', (req: Request, res: Response) => {
     success: "api works ['/']"
   })
 })
+
 router.post('/uniqueEmail', async (req: Request, res: Response) => {
   const { email } = req.body;
   const uniqueEmail = await User.findOne({email: email});

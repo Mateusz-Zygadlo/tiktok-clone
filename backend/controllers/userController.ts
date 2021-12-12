@@ -43,16 +43,17 @@ export const newAccount = [
 export const login = [
   async (req: Request, res: Response, next: NextFunction) => {
     const {email, password} = req.body;
-    User.findOne({ email: email }).exec(async (err, user) => {
-      if(err){
-        return next(err);
-      }
-      if(user == null){
-        return res.json({ error: 'not found email'});
-      }
+    const user = await User.findOne({ email: email });
+
+    if(user == null){
+      console.log('not found email')
+      return res.json({ error: 'not found email'});
+    }
+    try{
       if(await bcrypt.compare(password, user.password)){
         const userObj = {...user};
         const accessToken = jwt.sign(userObj, keys.SECRET_KEY);
+        console.log('login to account')
 
         return res
           .cookie('JWT-TOKEN', accessToken, {
@@ -63,9 +64,13 @@ export const login = [
           })
           .json({ success: 'login to account' })
       }else{
+        console.log('password is incorrest')
         return res.json({ error: 'password in incorrect' })
       }
-    })
+    }catch(err){
+      console.log('not expecting error');
+      return res.json({ error: 'not expecting error' })
+    }
   }
 ]
 
