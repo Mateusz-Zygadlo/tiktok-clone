@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useWindowSize from '../hooks/useWindowSize';
+import { useNavigate } from 'react-router-dom';
 import tune from '../assets/tune.svg';
 
 interface Props{
@@ -11,6 +12,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
   const [viewMoreLeave, setViewMoreLeave] = useState<boolean>(false);
   const [openProfile, setOpenProfile] = useState<boolean>(false);
   const size = useWindowSize();
+  const history = useNavigate();
 
   const profileMoveFunc = () => !profileLeave && setProfileLeave(true);
   const profileLeaveFunc = () => {
@@ -27,10 +29,11 @@ const Navbar: React.FC<Props> = ({ user }) => {
   }
  
   const toggleOpenProfile = () => setOpenProfile(!openProfile);
+  const toHome = () => history('/');
   
   return(
-    <div className="w-full h-14 flex justify-between items-center bg-white fixed top-0 left-0">
-      <div className="flex items-center cursor-pointer pl-3" title="home">
+    <div className="w-full h-14 flex justify-between items-center bg-white fixed top-0 left-0 xl:px-16">
+      <div className="flex items-center cursor-pointer pl-3" title="home" onClick={toHome}>
         <img src={tune} alt="a hand-drawn note in a photopea" />
         <p className="text-2xl font-extrabold">TikTok</p>
       </div>

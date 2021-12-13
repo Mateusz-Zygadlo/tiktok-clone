@@ -10,7 +10,7 @@ interface Props{
 
 const Comment: React.FC<Props> = ({ profileImageUrl, nick, description, date, commentLikes }) => {
   return(
-    <div className="flex my-1">
+    <div className="flex my-2">
       <div className="w-14">
         <img src={profileImageUrl} className="w-12 h-12 rounded-full" alt="alt" />
       </div>

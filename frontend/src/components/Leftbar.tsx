@@ -12,7 +12,7 @@ const Leftbar: React.FC<Props> = ({ user }) => {
   const mobileWidth: number = 1050;
 
   return(
-    <div className={`${size.width > 1050 ? 'w-72' : 'w-16 flex flex-col items-center'} leftbarHeightCalc pl-3 pb-5 overflow-y-auto overflow-x-hidden fixed top-14 left-0 bg-white`}>
+    <div className={`${size.width > 1050 ? 'w-72' : 'w-16 flex flex-col items-center'} leftbarHeightCalc pb-5 overflow-y-auto overflow-x-hidden fixed top-14 pl-3 left-0 bg-white xl:ml-16`}>
       <div className="mt-3 pb-1">
         <div className="flex items-center hover:bg-gray-100 p-2 cursor-pointer transition-colors">
           <span className="material-icons text-3xl">bed</span>

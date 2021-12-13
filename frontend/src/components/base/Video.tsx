@@ -12,7 +12,7 @@ const Video = () => {
       <div className="w-14">
         <img src="http://localhost:8000/public-1639159844793-149-1495532_gwent-tracker-home-good-profile-picture-for-discord.png" className="w-12 h-12 rounded-full" />
       </div>
-      <div className="w-full pl-2">
+      <div className="videoAuthorWidth pl-2">
         <div className="flex justify-between items-center">
           <div className="flex">
             <h1 className="mr-3 text-xl font-semibold max-w-40 break-words">nick</h1>

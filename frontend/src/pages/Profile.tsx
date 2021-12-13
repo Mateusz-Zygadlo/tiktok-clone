@@ -5,7 +5,7 @@ const Profile = () => {
   const user = useDecodeUser();
   
   return(
-    <Base>
+    <Base noPadding={true}>
       <div className="flex">
         <img src="http://localhost:8000/public-1639159844793-149-1495532_gwent-tracker-home-good-profile-picture-for-discord.png" className="w-32 h-32 rounded-full" alt="alt" />
         <div className="ml-3">

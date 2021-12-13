@@ -52,11 +52,19 @@
   }
   .gridProfileVideos{
     display: grid;
-    grid-template-columns: repeat(auto-fit, 190px);
+    grid-template-columns: repeat(3, 200px);
     grid-auto-rows: auto;
     align-items: center;
     justify-content: center;
     grid-gap: 1px;
+  } 
+  @media only screen and (max-width: 1000px){
+    .gridProfileVideos{
+      grid-template-columns: repeat(2, 200px);
+    } 
+  }
+  .videoAuthorWidth{
+    width: calc(100% - 48px);
   }
   .widthVideoPage{
     width: 500px;
