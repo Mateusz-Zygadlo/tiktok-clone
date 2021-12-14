@@ -2,6 +2,7 @@ import type { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import User from '../models/user';
 import jwt from 'jsonwebtoken';
+import async from 'async';
 import { keys } from '../keys/jwtToken';
 
 export const newAccount = [
@@ -82,3 +83,53 @@ export const logout = (req: Request, res: Response, next: NextFunction) => {
       success: 'logout profile'
     })
 }
+
+export const followPublicProfile = [
+  async (req: Request, res: Response, next: NextFunction) => {
+    const follower = req.body.id;
+    const profile = req.params.id;
+
+    async.parallel({
+      profile: (callback) => {
+        User.updateOne({_id: profile}, { $push: { followers: follower }}).exec(callback);
+      },
+      follower: (callback) => {
+        User.updateOne({_id: follower}, { $push: { following: profile }}).exec(callback);
+      }
+    }, (err, result) => {
+      if(err){
+        return res.sendStatus(403);
+      }
+
+      if(result){
+        return res.sendStatus(200);
+      }
+      return res.sendStatus(403);
+    })
+  }
+]
+
+export const removeFollow = [
+  async (req: Request, res: Response, next: NextFunction) => {
+    const follower = req.body.id;
+    const profile = req.params.id;
+
+    async.parallel({
+      profile: (callback) => {
+        User.updateOne({_id: profile}, { $pull: { followers: follower }}).exec(callback);
+      },
+      follower: (callback) => {
+        User.updateOne({_id: follower}, { $pull: { following: profile }}).exec(callback);
+      }
+    }, (err, result) => {
+      if(err){
+        return res.sendStatus(403);
+      }
+
+      if(result){
+        return res.sendStatus(200);
+      }
+      return res.sendStatus(403);
+    })
+  }
+]

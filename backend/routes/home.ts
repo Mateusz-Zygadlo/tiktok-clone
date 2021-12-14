@@ -1,6 +1,7 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import User from '../models/user';
+import { followPublicProfile, removeFollow } from '../controllers/userController';
 
 const router = express.Router();
 
@@ -32,5 +33,30 @@ router.post('/uniqueNick', async (req: Request, res: Response) => {
     nick,
   })
 })
+
+router.get('/profile/:id', async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findOne({nick: id})
+
+  if(user == null){
+    return res.sendStatus(403);
+  }
+
+  return res.json({
+    user
+  })
+})
+router.get('/profileById/:id', async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findOne({_id: id})
+
+  if(user == null){
+    return res.sendStatus(403);
+  }
+
+  return res.json({ user })
+})
+router.post('/followPublicProfile/:id', followPublicProfile);
+router.post('/removeFollow/:id', removeFollow);
 
 export default router;

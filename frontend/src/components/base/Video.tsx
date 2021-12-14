@@ -29,7 +29,9 @@ const Video = () => {
           <p className="font-semibold w-72 break-words">#hashtags</p>
         </div>
         <div className="flex items-end">
-          <div className="border-2 border-red-300 w-72 homeVideoSize"></div>
+          <video className="border-2 border-red-300 w-72 homeVideoSize" controls>
+                <source src="http://localhost:8000/pexels-sami-aksu-10207542.mp4" type="video/mp4"/>
+          </video>
           <div className="ml-3 flex flex-col">
             <span className="material-icons text-4xl text-red-300 cursor-pointer mb-3" onClick={toggleLike}>{like ? 'favorite' : 'favorite_border'}</span>
             <span className="material-icons text-3xl mb-3">fireplace</span>

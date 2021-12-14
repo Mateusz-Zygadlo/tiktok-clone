@@ -18,6 +18,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path='/settings' element={<Settings />} />
         <Route path='/video/:id' element={<Video />} />
+        <Route path='/profile/:id' element={<Profile />} />
       </Routes>
     </BrowserRouter>
   )

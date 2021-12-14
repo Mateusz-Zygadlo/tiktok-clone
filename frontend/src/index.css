@@ -76,6 +76,9 @@
   .homeVideoSize{
     aspect-ratio: 9/16;
   }
+  .commentsDivHeight{
+    max-height: 450px;
+  }
   .videoSize{
     width: 100%;
     aspect-ratio: 9/16;
