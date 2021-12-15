@@ -29,6 +29,8 @@ export const newAccount = [
       dateOfBirth: `${year}-${month}-${day}`,
       yearOfBirth: `${year}`,
       picture: req.body.imageName,
+      invitations: [],
+      yourInvitations: [],
     }).save((err: any) => {
       if(err){
         return next(err);
@@ -120,6 +122,87 @@ export const removeFollow = [
       },
       follower: (callback) => {
         User.updateOne({_id: follower}, { $pull: { following: profile }}).exec(callback);
+      }
+    }, (err, result) => {
+      if(err){
+        return res.sendStatus(403);
+      }
+
+      if(result){
+        return res.sendStatus(200);
+      }
+      return res.sendStatus(403);
+    })
+  }
+]
+
+export const sendInvitation = [
+  async (req: Request, res: Response, next: NextFunction) => {
+    const from = req.body.id;
+    const to = req.params.id;
+
+    async.parallel({
+      profile: (callback) => {
+        User.updateOne({_id: from}, { $push: { yourInvitations: to }}).exec(callback);
+      },
+      follower: (callback) => {
+        User.updateOne({_id: to}, { $push: { invitations: from }}).exec(callback);
+      }
+    }, (err, result) => {
+      if(err){
+        return res.sendStatus(403);
+      }
+
+      if(result){
+        return res.sendStatus(200);
+      }
+      return res.sendStatus(403);
+    })
+  }
+]
+
+export const cancelSendInvitation = [
+  async (req: Request, res: Response, next: NextFunction) => {
+    const from = req.body.id;
+    const to = req.params.id;
+
+    async.parallel({
+      profile: (callback) => {
+        User.updateOne({_id: from}, { $pull: { yourInvitations: to }}).exec(callback);
+      },
+      follower: (callback) => {
+        User.updateOne({_id: to}, { $pull: { invitations: from }}).exec(callback);
+      }
+    }, (err, result) => {
+      if(err){
+        return res.sendStatus(403);
+      }
+
+      if(result){
+        return res.sendStatus(200);
+      }
+      return res.sendStatus(403);
+    })
+  }
+]
+
+export const acceptInvitation = [
+  async (req: Request, res: Response, next: NextFunction) => {
+    const from = req.body.id;
+    const to = req.params.id;
+
+    async.parallel({
+      profile: (callback) => {
+        User.updateOne({_id: to}, { $pull: { yourInvitations: from }}).exec(callback);
+      },
+      follower: (callback) => {
+        User.updateOne({_id: from}, { $pull: { invitations: to }}).exec(callback);
+      },
+      FollowerFriend: (callback) => {
+        User.updateOne({_id: to}, { $push: { following: from }}).exec(callback);
+      },
+      PrivateProfile: (callback) => {
+        User.updateOne({_id: from}, { $push: { followers: to }}).exec(callback);
       }
     }, (err, result) => {
       if(err){

@@ -87,7 +87,15 @@ const UserSchema = new Schema({
   picture: {
     type: "string",
     default: "http://localhost:8000/public-1639159844793-149-1495532_gwent-tracker-home-good-profile-picture-for-discord.png",
-  }
+  },
+  invitations: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User' 
+  }],
+  yourInvitations: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 })
 
 const User = mongoose.model('User', UserSchema);

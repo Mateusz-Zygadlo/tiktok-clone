@@ -1,7 +1,7 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import User from '../models/user';
-import { followPublicProfile, removeFollow } from '../controllers/userController';
+import { followPublicProfile, removeFollow, sendInvitation, cancelSendInvitation, acceptInvitation } from '../controllers/userController';
 
 const router = express.Router();
 
@@ -56,6 +56,21 @@ router.get('/profileById/:id', async (req, res) => {
 
   return res.json({ user })
 })
+
+router.get('/findProfiles/:id', async (req, res) => {
+  const { id } = req.params;
+
+  User.find({ _id: { $ne: id }}).exec((err, result) => {
+    return res.json({
+      result
+    })
+  })
+})
+
+router.post('/sendInvitation/:id', sendInvitation);
+router.post('/cancelSendInvitation/:id', cancelSendInvitation);
+router.post('/acceptInvitation/:id', acceptInvitation);
+
 router.post('/followPublicProfile/:id', followPublicProfile);
 router.post('/removeFollow/:id', removeFollow);
 
