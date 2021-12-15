@@ -9,6 +9,11 @@ const Profile = () => {
   const [owner, setOwner] = useState<any>(null);
   const [myProfile, setMyProfile] = useState<boolean>(false);
   const [following, setFollowing] = useState<boolean>(false);
+  
+  const [privateAccount, setPrivateAccount] = useState<boolean>(false);
+  const [myInvitations, setMyInvitations] = useState<boolean>(false);
+  const [accept, setAccept] = useState<boolean>(false);
+
   const { id } = useParams();
   const user = useDecodeUser();
   const fetchProfile = async (profileName: any) => {
@@ -24,20 +29,48 @@ const Profile = () => {
       .then((res) => setOwner(res.data.user))
       .catch((err) => setOwner(null))
   }
+  const isSendInvitation = () => {
+    if(owner.invitations.length == 0){
+      return setAccept(false);
+    } 
+    for(let i = 0; i < owner.invitations.length; i++){
+      if(owner.invitations[i] == profileData._id){
+        return setAccept(true);
+      }
+    }
+    setAccept(false);
+  }
   const isFollowing = () => {
     if(profileData && owner){
-      const isMyProfile = owner._id == profileData._id ? true : false;
-      if(isMyProfile){
-        return setMyProfile(true)
-      }
-      for(let i = 0; i < owner.following.length; i++){
-        if(owner.following[i] == profileData._id){
-          return setFollowing(true)
+      isSendInvitation();
+      if(profileData.privateAccount){
+        setPrivateAccount(true);
+        myInvitationsFunc();
+        setFollowing(false);
+        for(let i = 0; i < owner.following.length; i++){
+          if(owner.following[i] == profileData._id){
+            return setFollowing(true)
+          }
+        }
+      }else{
+        const isMyProfile = owner._id == profileData._id ? true : false;
+        if(isMyProfile){
+          return setMyProfile(true)
         }
       }
       setMyProfile(false);
-      setFollowing(false);
     }
+  }
+  const myInvitationsFunc = () => {
+    if(owner.invitations.length == 0){
+      return setMyInvitations(false);
+    }
+    for(let i = 0; i < owner.invitations.length; i++){
+      if(owner.invitations[i] == profileData._id){
+        return setMyInvitations(true)
+      }
+    }
+    setMyInvitations(false);
   }
 
   const addToFollowing = async () => {
@@ -58,7 +91,19 @@ const Profile = () => {
       })
       .catch((err) => setFollowing(true))
   }
-
+  const sendInvitationFunc = async () => {
+    return await axios.post(`http://localhost:8000/sendInvitation/${profileData._id}`, { id: user._id })
+      .then((res) => console.log(res));
+  }
+  const cancelSendInvitation = async () => {
+    return await axios.post(`http://localhost:8000/cancelSendInvitation/${profileData._id}`, { id: user._id })
+      .then((res) => console.log(res));
+  }
+  const acceptInvitations = async () => {
+    return await axios.post(`http://localhost:8000/acceptInvitation/${profileData._id}`, { id: user._id })
+      .then((res) => console.log(res));
+  }
+  
   useEffect(() => {
     isFollowing();
   }, [profileData, owner]);
@@ -84,7 +129,25 @@ const Profile = () => {
                 <p className="text-lg">[{profileData.firstName} {profileData.lastName}]</p>
               </div>
             </div>
-            {myProfile ? <p>My profile</p> : following ? <button onClick={removeFollow}>Following</button> : <button onClick={addToFollowing}>follow</button>}
+            <div className="flex flex-col">
+              {accept ? <button onClick={acceptInvitations}>Accept invitations</button> : 
+                <>
+                  {following && privateAccount ? 
+                    <button onClick={removeFollow}>delete follow</button>
+                  : privateAccount ?
+                    <>
+                      <button onClick={sendInvitationFunc}>Send invitation</button>
+                      <button onClick={cancelSendInvitation}> Cancel send invitation</button>
+                    </>
+                  : 
+                    <>
+                      <button onClick={addToFollowing}>follow</button>
+                      <button onClick={removeFollow}>delete follow</button>
+                    </>
+                  }
+                </>
+              }
+            </div>
           </div>
           <div className="flex mt-2">
             <p className="mr-3">{profileData.following.length} Following</p>
