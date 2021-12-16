@@ -216,3 +216,28 @@ export const acceptInvitation = [
     })
   }
 ]
+
+export const removeInvitation = [
+  async (req: Request, res: Response, next: NextFunction) => {
+    const from = req.body.id;
+    const to = req.params.id;
+
+    async.parallel({
+      profile: (callback) => {
+        User.updateOne({_id: to}, { $pull: { yourInvitations: from }}).exec(callback);
+      },
+      follower: (callback) => {
+        User.updateOne({_id: from}, { $pull: { invitations: to }}).exec(callback);
+      },
+    }, (err, result) => {
+      if(err){
+        return res.sendStatus(403);
+      }
+
+      if(result){
+        return res.sendStatus(200);
+      }
+      return res.sendStatus(403);
+    })
+  }
+]

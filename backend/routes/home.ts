@@ -1,7 +1,7 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import User from '../models/user';
-import { followPublicProfile, removeFollow, sendInvitation, cancelSendInvitation, acceptInvitation } from '../controllers/userController';
+import { followPublicProfile, removeFollow, sendInvitation, cancelSendInvitation, acceptInvitation, removeInvitation } from '../controllers/userController';
 
 const router = express.Router();
 
@@ -70,6 +70,7 @@ router.get('/findProfiles/:id', async (req, res) => {
 router.post('/sendInvitation/:id', sendInvitation);
 router.post('/cancelSendInvitation/:id', cancelSendInvitation);
 router.post('/acceptInvitation/:id', acceptInvitation);
+router.post('/removeInvitation/:id', removeInvitation);
 
 router.post('/followPublicProfile/:id', followPublicProfile);
 router.post('/removeFollow/:id', removeFollow);

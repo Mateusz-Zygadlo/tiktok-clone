@@ -9,16 +9,18 @@ const Profile = () => {
   const [owner, setOwner] = useState<any>(null);
   const [myProfile, setMyProfile] = useState<boolean>(false);
   const [following, setFollowing] = useState<boolean>(false);
-  
   const [privateAccount, setPrivateAccount] = useState<boolean>(false);
   const [myInvitations, setMyInvitations] = useState<boolean>(false);
   const [accept, setAccept] = useState<boolean>(false);
 
   const { id } = useParams();
   const user = useDecodeUser();
+  
   const fetchProfile = async (profileName: any) => {
     return await axios.get(`http://localhost:8000/profile/${profileName}`)
-      .then((res) => setProfileData(res.data.user))
+      .then((res) => {
+        setProfileData(res.data.user);
+      })
       .catch((err) => setProfileData(null))
   }
   const fetchOwner = async () => {
@@ -26,57 +28,59 @@ const Profile = () => {
       return;
     }
     return await axios.get(`http://localhost:8000/profileById/${user._id}`)
-      .then((res) => setOwner(res.data.user))
+      .then((res) => {
+        setOwner(res.data.user);
+      })
       .catch((err) => setOwner(null))
   }
-  const isSendInvitation = () => {
-    if(owner.invitations.length == 0){
-      return setAccept(false);
-    } 
+  const isForYouInvitation = () => {
+    if(owner.invitations.length == 0) return setAccept(false);
     for(let i = 0; i < owner.invitations.length; i++){
       if(owner.invitations[i] == profileData._id){
         return setAccept(true);
       }
     }
-    setAccept(false);
+    setAccept(false)
   }
   const isFollowing = () => {
-    if(profileData && owner){
-      isSendInvitation();
-      if(profileData.privateAccount){
-        setPrivateAccount(true);
-        myInvitationsFunc();
-        setFollowing(false);
-        for(let i = 0; i < owner.following.length; i++){
-          if(owner.following[i] == profileData._id){
-            return setFollowing(true)
-          }
-        }
-      }else{
-        const isMyProfile = owner._id == profileData._id ? true : false;
-        if(isMyProfile){
-          return setMyProfile(true)
-        }
+    if(owner.following.length == 0) return setFollowing(false);
+    for(let i = 0; i < owner.following.length; i++){
+      if(owner.following[i] == profileData._id){
+        return setFollowing(true);
       }
-      setMyProfile(false);
     }
+    setFollowing(false);
   }
-  const myInvitationsFunc = () => {
-    if(owner.invitations.length == 0){
-      return setMyInvitations(false);
-    }
-    for(let i = 0; i < owner.invitations.length; i++){
-      if(owner.invitations[i] == profileData._id){
-        return setMyInvitations(true)
+  const isInvitationsFunc = () => {
+    if(owner.yourInvitations.length == 0) return setMyInvitations(false);
+    for(let i = 0; i < owner.yourInvitations.length; i++){
+      if(owner.yourInvitations[i] == profileData._id){
+        return setMyInvitations(true);
       }
     }
     setMyInvitations(false);
   }
-
+  const isPrivateAccount = () => {
+    if(profileData.privateAccount){
+      return setPrivateAccount(true)
+    }
+    setPrivateAccount(false);
+  }
+  const isMyAccount = () => {
+    return profileData._id == owner._id ? setMyProfile(true) : setMyProfile(false);
+  }
+  const check = () => {
+    if(owner && profileData){
+      isForYouInvitation();
+      isFollowing();
+      isInvitationsFunc();
+      isPrivateAccount();
+      isMyAccount();
+    }
+  }
   const addToFollowing = async () => {
     return await axios.post(`http://localhost:8000/followPublicProfile/${profileData._id}`, { id: user._id })
       .then((res) => {
-        setFollowing(true)
         fetchProfile(id);
         fetchOwner()
       })
@@ -85,7 +89,6 @@ const Profile = () => {
   const removeFollow = async () => {
     return await axios.post(`http://localhost:8000/removeFollow/${profileData._id}`, { id: user._id })
       .then((res) => {
-        setFollowing(true)
         fetchProfile(id);
         fetchOwner()
       })
@@ -93,19 +96,27 @@ const Profile = () => {
   }
   const sendInvitationFunc = async () => {
     return await axios.post(`http://localhost:8000/sendInvitation/${profileData._id}`, { id: user._id })
-      .then((res) => console.log(res));
+      .then((res) => setMyInvitations(true))
+      .catch((err) => setMyInvitations(false))
   }
   const cancelSendInvitation = async () => {
     return await axios.post(`http://localhost:8000/cancelSendInvitation/${profileData._id}`, { id: user._id })
-      .then((res) => console.log(res));
+      .then((res) => setMyInvitations(false))
+      .catch((err) => setMyInvitations(true))
   }
   const acceptInvitations = async () => {
     return await axios.post(`http://localhost:8000/acceptInvitation/${profileData._id}`, { id: user._id })
-      .then((res) => console.log(res));
+      .then((res) => setAccept(false))
+      .catch((err) => setAccept(true))
+  }
+  const removeInvitations = async () => {
+    return await axios.post(`http://localhost:8000/removeInvitation/${profileData._id}`, { id: user._id })
+      .then((res) => setAccept(false))
+      .catch((err) => setAccept(true))
   }
   
   useEffect(() => {
-    isFollowing();
+    check();
   }, [profileData, owner]);
 
   useEffect(() => {
@@ -130,22 +141,23 @@ const Profile = () => {
               </div>
             </div>
             <div className="flex flex-col">
-              {accept ? <button onClick={acceptInvitations}>Accept invitations</button> : 
+              {myProfile ? <div>My Profile</div> 
+              : accept ? 
                 <>
-                  {following && privateAccount ? 
-                    <button onClick={removeFollow}>delete follow</button>
-                  : privateAccount ?
-                    <>
-                      <button onClick={sendInvitationFunc}>Send invitation</button>
-                      <button onClick={cancelSendInvitation}> Cancel send invitation</button>
-                    </>
-                  : 
-                    <>
-                      <button onClick={addToFollowing}>follow</button>
-                      <button onClick={removeFollow}>delete follow</button>
-                    </>
-                  }
+                  <button onClick={acceptInvitations}>Accept invitations</button> 
+                  <button onClick={removeInvitations}>Remove invitations</button> 
                 </>
+              : following ? 
+                <button onClick={removeFollow}>delete follow</button>
+              : privateAccount ? 
+                <>
+                  {myInvitations ? 
+                    <button onClick={cancelSendInvitation}> Cancel send invitation</button> 
+                  : accept ? <button onClick={acceptInvitations}>Accept invitations</button>
+                  : <button onClick={sendInvitationFunc}>Send invitation</button>}
+                </>
+              :
+                <button onClick={addToFollowing}>follow</button>
               }
             </div>
           </div>
@@ -159,8 +171,9 @@ const Profile = () => {
             <p className="text-xl font-semibold w-40 mx-auto cursor-pointer border-b-2 border-transparent hover:border-black transition-colors">Videos</p>
             <p className="text-xl font-semibold w-40 mx-auto cursor-pointer border-b-2 border-transparent hover:border-black transition-colors">Likes</p>
           </div>
-          {profileData.privateAccount ?
-            <p className="text-2xl font-semibold w-full flex justify-center mt-10">Private profile</p>
+          {profileData.privateAccount && following ?
+            <p className="text-2xl font-semibold w-full flex justify-center mt-10">You following private account</p>
+          : profileData.privateAccount ? <p className="text-2xl font-semibold w-full flex justify-center mt-10">Private profile</p>
           : profileData.videos.length > 0 ? (
             <div className="gridProfileVideos mt-1 pb-5">
               {profileData.videos.map((video: any) => (
