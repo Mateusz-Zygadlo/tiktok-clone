@@ -1,23 +1,4 @@
-import mongoose, {Document} from 'mongoose';
-
-interface IUser extends Document {
-  email: string,
-  password: string,
-  nick: string,
-  firstName: string,
-  lastName: string,
-  description: string,
-  following: any,
-  followers: any,
-  videos: any,
-  allProfileLikes: number,
-  videoLikes: any,
-  comments: any,
-  privateAccount: boolean,
-  dateOfBirth: string,
-  yearOfBirth: string,
-  picture: string,
-}
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
@@ -58,7 +39,7 @@ const UserSchema = new Schema({
   }],
   videos: [{
     type: Schema.Types.ObjectId,
-    ref: 'video'
+    ref: 'video',
   }],
   allProfileLikes: {
     type: 'number',

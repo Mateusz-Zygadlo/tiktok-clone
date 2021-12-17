@@ -61,25 +61,6 @@ const Leftbar: React.FC<Props> = ({ user }) => {
           <p className="mt-1 text-sm text-red-300 font-semibold hover:text-red-400 w-12 cursor-pointer transition-colors">See all</p>
         )}      
       </div>
-      {size.width > mobileWidth && (
-        <>
-          <div className="w-full my-2 border-t-2 border-black"></div>
-          <div className="p-2">
-            <p className="text-sm text-gray-800 font-semibold hover:text-black w-12 cursor-pointer transition-colors">Discover</p>
-            <div className="mt-2 flex flex-wrap">
-              <p className="border-2 border-black p-1 m-1">break wordsbreak</p>
-              <p className="border-2 border-black p-1 m-1">test</p>
-              <p className="border-2 border-black p-1 m-1">this is</p>
-              <p className="border-2 border-black p-1 m-1">test</p>
-              <p className="border-2 border-black p-1 m-1">test</p>
-              <p className="border-2 border-black p-1 m-1">test</p>
-              <p className="border-2 border-black p-1 m-1">test this is</p>
-              <p className="border-2 border-black p-1 m-1">test</p>
-              <p className="border-2 border-black p-1 m-1">test</p>
-            </div>
-          </div>
-        </>
-      )}
     </div>
   )
 }

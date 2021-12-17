@@ -6,6 +6,7 @@ import Logout from './pages/Logout';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Video from './pages/Video';
+import UploadVideo from './pages/UploadVideo';
 
 const App = () => {
   return(
@@ -19,6 +20,7 @@ const App = () => {
         <Route path='/settings' element={<Settings />} />
         <Route path='/video/:id' element={<Video />} />
         <Route path='/profile/:id' element={<Profile />} />
+        <Route path="/upload" element={<UploadVideo />} />
       </Routes>
     </BrowserRouter>
   )
