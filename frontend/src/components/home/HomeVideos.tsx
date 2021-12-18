@@ -6,6 +6,7 @@ import useDecodeUser from '../../hooks/useDecodeUser';
 const HomeVideos = () => {
   const [videos, setVideos] = useState<any>(null);
   const [owner, setOwner] = useState<any>(null);
+  const [like, setLike] = useState<boolean>(false);
   const user = useDecodeUser();
 
   const getVideos = async () => {
@@ -39,8 +40,6 @@ const HomeVideos = () => {
         <>
           {videos.result.map((video: any, index: number) => (
             <Video 
-              ownerVideo={video.owner == owner._id ? true : false}
-              following={video.owner == owner._id ? true : false}
               key={index} 
               profileImageUrl={video.profileImageUrl}
               nick={video.nick} 
@@ -50,6 +49,9 @@ const HomeVideos = () => {
               video={video.video}
               owner={video.owner}
               videoId={video._id}
+              likes={video.likes}
+              getVideos={getVideos}
+              currentUser={user._id}
             />
           ))}
         </>

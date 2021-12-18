@@ -164,6 +164,82 @@ router.get('/comments/:id', (req, res) => {
   }
 })
 
+router.post('/videoLike/:id', (req, res) => {
+  const { id } = req.params;
+  const owner = req.body.user._id;
+  let isLike = false;
+
+  try{
+    Video.findOne({_id: id}).exec((err, result) => {
+      if(err || !result){
+        return res.sendStatus(403);
+      }
+      for(let i = 0; i < result.likes.length; i++){
+        if(result.likes[i].toString() == owner){
+          isLike = true;
+        }
+      }
+
+      if(isLike){
+        Video.updateOne({_id: id}, { $pull: { likes: owner }}).exec((err, result) => {
+          if(err || !result){
+            return res.sendStatus(403);
+          }
+          return res.json({message: 'cancel like'});
+        })
+      }else{
+        Video.updateOne({_id: id}, { $push: { likes: owner } }).exec((err, result) => {
+          if(err || !result){
+            return res.sendStatus(403);
+          }
+          return res.json({message: 'like'});
+        })
+      }
+    })
+  }catch(err){
+    console.log(err);
+  }
+})
+
+router.post('/togglePrivateAccount/:id', (req, res) => {
+  const { id } = req.params;
+
+  try{
+    User.findOne({_id: id}).exec((err, result) => {
+      if(err || !result){
+        return res.sendStatus(403);
+      }
+      const togglePrivateAccount = !result.privateAccount;
+      User.updateOne({_id: id}, { privateAccount: togglePrivateAccount }).exec((err, result) => {
+        if(err || !result){
+          return res.sendStatus(403);
+        }
+        return res.sendStatus(200);
+      })
+    })
+  }catch(err){
+    console.log(err);
+  }
+})
+
+router.post('/deleteProfile/:id', (req, res) => {
+  const { id } = req.params;
+  
+  try{
+    User.remove({_id: id}).exec((err, result) => {
+      if(err || !result){
+        return res.sendStatus(403);
+      }
+
+      return res
+        .clearCookie('JWT-TOKEN', {path: '/'})
+        .sendStatus(200);
+    })
+  }catch(err){
+    console.log(err);
+  }
+})
+
 router.post('/sendInvitation/:id', sendInvitation);
 router.post('/cancelSendInvitation/:id', cancelSendInvitation);
 router.post('/acceptInvitation/:id', acceptInvitation);

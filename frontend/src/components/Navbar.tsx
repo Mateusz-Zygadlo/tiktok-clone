@@ -52,7 +52,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
               <div className="w-40 bg-white border-2 border-black absolute top-14 right-2 xl:right-24 p-2" onMouseMove={viewMoreMoveFunc} onMouseLeave={viewMoreLeaveFunc}>
                 <div className="flex px-2 py-1 mb-1 cursor-pointer hover:bg-gray-100">
                   <span className="material-icons mr-2">face</span>
-                  <a href='/profile' className="font-semibold">View profile</a>
+                  <a href={`/profile/${user.nick}`} className="font-semibold">View profile</a>
                 </div>
                 <div className="flex px-2 py-1 cursor-pointer hover:bg-gray-100">
                   <span className="material-icons mr-2">psychology</span>
