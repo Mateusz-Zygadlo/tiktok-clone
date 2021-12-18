@@ -5,10 +5,9 @@ interface Props{
   nick: string,
   description: string,
   date: string,
-  commentLikes: number,
 }
 
-const Comment: React.FC<Props> = ({ profileImageUrl, nick, description, date, commentLikes }) => {
+const Comment: React.FC<Props> = ({ profileImageUrl, nick, description, date }) => {
   return(
     <div className="flex my-2">
       <div className="w-14">
@@ -19,10 +18,6 @@ const Comment: React.FC<Props> = ({ profileImageUrl, nick, description, date, co
           <h1 className="font-semibold text-xl break-words">{nick}</h1>
           <p className="text-md break-words">{description}</p>
           <p className="text-sm">{date}</p>
-        </div>
-        <div className="flex flex-col justify-center items-center mr-4">
-          <span className="material-icons text-lg">favorite</span>
-          <p>{commentLikes}</p>
         </div>
       </div>
     </div>

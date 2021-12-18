@@ -49,6 +49,7 @@ const HomeVideos = () => {
               description={video.description}
               video={video.video}
               owner={video.owner}
+              videoId={video._id}
             />
           ))}
         </>

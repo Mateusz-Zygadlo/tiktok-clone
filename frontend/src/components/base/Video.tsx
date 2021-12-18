@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import MobileComments from './MobileComments';
+import { useNavigate } from 'react-router-dom';
 
 interface Props{
   profileImageUrl: string,
@@ -11,16 +11,14 @@ interface Props{
   owner: string,
   following: boolean,
   ownerVideo: boolean,
+  videoId: any,
 }
 
-const Video: React.FC<Props> = ({ profileImageUrl, nick, firstName, lastName, description, video, owner, following, ownerVideo }) => {
+const Video: React.FC<Props> = ({ profileImageUrl, nick, firstName, lastName, description, video, owner, following, ownerVideo, videoId }) => {
   const [like, setLike] = useState<boolean>(false);
-  const [isFollowing, setFollowing] = useState<boolean>(false);
-  const [mobileComments, setMobileComments] = useState<boolean>(false);
-  
+  const history = useNavigate();
+  const goToCurrentVideo = (props: any) =>  history(`/video/${props}`)
   const toggleLike = () => setLike(!like); 
-  const toggleFollowing = () => setFollowing(!following);
-  const closeMobileComments = (props: boolean) => setMobileComments(props); 
 
   return(
     <div className="flex mb-3 relative">
@@ -34,11 +32,11 @@ const Video: React.FC<Props> = ({ profileImageUrl, nick, firstName, lastName, de
             <p className="text-md w-52 break-words">[{firstName} {lastName}]</p>
           </div>
           {ownerVideo ?
-            <button className="mr-5 px-3 py-1 font-semibold border-2 border-transparent text-white bg-red-500 hover:bg-red-500 transition-colors" onClick={toggleFollowing}>Your video</button>
+            <button className="mr-5 px-3 py-1 font-semibold border-2 border-transparent text-white bg-red-500 hover:bg-red-500 transition-colors">Your video</button>
           : following ? 
-            <button className="mr-5 px-3 py-1 font-semibold border-2 border-transparent text-white bg-red-500 hover:bg-red-500 transition-colors" onClick={toggleFollowing}>Following</button>
+            <button className="mr-5 px-3 py-1 font-semibold border-2 border-transparent text-white bg-red-500 hover:bg-red-500 transition-colors">Following</button>
           : 
-            <button className="mr-5 px-3 py-1 font-semibold text-red-500 border-2 border-red-500 hover:border-red-600 hover:text-red-600 transition-colors" onClick={toggleFollowing}>Follow</button>
+            <button className="mr-5 px-3 py-1 font-semibold text-red-500 border-2 border-red-500 hover:border-red-600 hover:text-red-600 transition-colors">Follow</button>
           }
         </div>
         <div className="mb-3">
@@ -50,15 +48,10 @@ const Video: React.FC<Props> = ({ profileImageUrl, nick, firstName, lastName, de
           </video>
           <div className="ml-3 flex flex-col">
             <span className="material-icons text-4xl text-red-300 cursor-pointer mb-3" onClick={toggleLike}>{like ? 'favorite' : 'favorite_border'}</span>
-            <span className="material-icons text-3xl mb-3" onClick={()=>{setMobileComments(true)}}>fireplace</span>
+            <span className="material-icons text-3xl mb-3 cursor-pointer" onClick={()=>{goToCurrentVideo(videoId)}}>fireplace</span>
           </div>
         </div>
       </div>
-      {mobileComments ? <div className="absolute -left-2 top-2 commentSectionWidth commentSectionHeight">
-        <MobileComments 
-          closeMobileComments={closeMobileComments}
-          id={owner} />
-      </div> : null}
     </div>
   )
 }

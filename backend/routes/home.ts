@@ -2,6 +2,8 @@ import express from 'express';
 import type { Request, Response } from 'express';
 import User from '../models/user';
 import Video from '../models/video';
+import Comment from '../models/comment';
+import async from 'async';
 import { followPublicProfile, removeFollow, sendInvitation, cancelSendInvitation, acceptInvitation, removeInvitation } from '../controllers/userController';
 
 const router = express.Router();
@@ -77,6 +79,85 @@ router.get('/allVideos', (req, res) => {
       if(result){
         return res.json({ result })
       }
+    })
+  }catch(err){
+    console.log(err);
+  }
+})
+
+router.get('/video/:id', (req, res) => {
+  const { id } = req.params;
+  try{
+    Video.findOne({_id: id}).exec((err, result) => {
+      if(err){
+        return res.sendStatus(403);
+      }
+      if(!result){
+        return res.sendStatus(403);
+      }
+
+      return res
+        .status(200)
+        .json({ result });
+    })
+  }catch(err){
+    console.log(err);
+  }
+})
+
+router.post('/addComment/:id', (req, res) => {
+  const { id } = req.params;
+  const { nick, picture, _id } = req.body.user;
+  const { comment } = req.body;
+ 
+  try{
+    const newComment = new Comment({
+      nick,
+      profileImageUrl: picture,
+      description: comment,
+      createdAt: Date.now(),
+      video: id,
+      owner: _id,
+    }).save((err: any, result: any) => {
+      if(err){
+        return res.sendStatus(403);
+      }
+      async.parallel({
+        addCommentToUser: (callback) => {
+          User.updateOne({_id: result.owner}, { $push: { comments: result._id }}).exec(callback);
+        },
+        addCommentToVideo: (callback) => {
+          Video.updateOne({_id: result.video}, { $push: { comments: result._id }}).exec(callback);
+        }
+      }, (err, result) => {
+        if(err || !result){
+          return res.sendStatus(403);
+        }
+
+        return res
+          .status(200)
+          .json({
+            message: 'you create succesfully comment'
+          })
+      })
+    })
+  }catch(err){
+    console.log('something went wrong')
+  }
+})
+
+router.get('/comments/:id', (req, res) => {
+  const { id } = req.params;
+  
+  try{
+    Comment.find({video: id}).exec((err, result) => {
+      if(err || !result){
+        return res.sendStatus(403);
+      }
+
+      return res.json({
+        result
+      })
     })
   }catch(err){
     console.log(err);

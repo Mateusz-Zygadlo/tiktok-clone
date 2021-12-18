@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Comment from './Comment';
 
 interface Props{
   closeMobileComments: (props: boolean) => void,
@@ -24,12 +23,12 @@ const MobileComments: React.FC<Props> = ({ closeMobileComments, id }) => {
         <span className="material-icons text-4xl hover:text-red-300 transition-colors cursor-pointer pr-5" onClick={()=>{closeMobileComments(false)}}>close</span>
        </div>
        <div className="px-5 my-14">
-          <Comment
+          {/* <Comment
             profileImageUrl=""
             nick="This is a nick This is a nick This is a nick This is a nick This is a nickThis is a nick"
             date="12/3"
             description="This is a description this is a description"
-            commentLikes={123} />
+          /> */}
        </div>
        <div className="h-14 w-full fixed bottom-0 flex items-center bg-white border-t-2 border-black">
           <input name="comment" onChange={changeComment} type="text" className="border-b-2 border-gray-200 w-full focus:outline-none" />
