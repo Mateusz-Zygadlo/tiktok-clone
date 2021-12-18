@@ -1,6 +1,7 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import User from '../models/user';
+import Video from '../models/video';
 import { followPublicProfile, removeFollow, sendInvitation, cancelSendInvitation, acceptInvitation, removeInvitation } from '../controllers/userController';
 
 const router = express.Router();
@@ -65,6 +66,21 @@ router.get('/findProfiles/:id', async (req, res) => {
       result
     })
   })
+})
+
+router.get('/allVideos', (req, res) => {
+  try{
+    Video.find({whoViewVideo: 'public'}).exec((err, result) => {
+      if(err){
+        return res.sendStatus(403)
+      }
+      if(result){
+        return res.json({ result })
+      }
+    })
+  }catch(err){
+    console.log(err);
+  }
 })
 
 router.post('/sendInvitation/:id', sendInvitation);

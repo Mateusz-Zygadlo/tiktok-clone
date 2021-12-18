@@ -16,8 +16,8 @@ const Comment: React.FC<Props> = ({ profileImageUrl, nick, description, date, co
       </div>
       <div className="ml-3 flex justify-between items-center w-full">
         <div>
-          <h1 className="font-semibold text-xl w-80 break-words">{nick}</h1>
-          <p className="text-md w-80 break-words">{description}</p>
+          <h1 className="font-semibold text-xl break-words">{nick}</h1>
+          <p className="text-md break-words">{description}</p>
           <p className="text-sm">{date}</p>
         </div>
         <div className="flex flex-col justify-center items-center mr-4">

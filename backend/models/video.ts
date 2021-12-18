@@ -5,8 +5,7 @@ const VideoSchema = new Schema({
   nick: {
     type: 'string',
     required: true,
-    maxLength: 50,
-    unique: true,
+    unique: false,
   },
   firstName: {
     type: 'string',
@@ -48,6 +47,10 @@ const VideoSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
+  profileImageUrl: {
+    type: 'string',
+    required: true,
+  }
 })
 
 const User = mongoose.model('Video', VideoSchema);

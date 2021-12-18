@@ -79,6 +79,12 @@
   .commentsDivHeight{
     max-height: 450px;
   }
+  .commentSectionHeight{
+    height: 600px;
+  }
+  .commentSectionWidth{
+    width: 400px;
+  }
   .videoSize{
     width: 100%;
     aspect-ratio: 9/16;

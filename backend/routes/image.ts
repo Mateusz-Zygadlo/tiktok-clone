@@ -34,10 +34,10 @@ router.post('/new', upload.single('file'), (req: any, res: any) => {
 router.post('/schema', async (req: any, res: any) => {
   try{
     const { caption, whoViewVideo } = req.body.video;
-    const { _id, nick, firstName, lastName } = req.body.user;
+    const { _id, nick, firstName, lastName, picture } = req.body.user;
     const imageName = req.body.imageName;
     const isComments = req.body.video.comments;
-    
+
     const newVideo = new Video({
       nick,
       firstName,
@@ -49,6 +49,8 @@ router.post('/schema', async (req: any, res: any) => {
       comments: [],
       likes: [],
       owner: _id,
+      createdAt: Date.now(),
+      profileImageUrl: picture
     }).save((err: any) => {
       if(err){
         console.log(err);
@@ -64,6 +66,7 @@ router.post('/schema', async (req: any, res: any) => {
 });
 
 router.post('/updateProfile', async (req: Request, res: Response) => {
+  console.log(req.body)
   try{
     Video.findOne({video: req.body.videoName}).exec((err, result) => {
       if(!result){
@@ -83,7 +86,6 @@ router.post('/updateProfile', async (req: Request, res: Response) => {
 })
 
 router.post('/upload', upload.single('file'), (req: any, res: any) => { 
-  console.log(req.body);
   try{
     const newFile = new VideoLink({
       name: req.file.filename,

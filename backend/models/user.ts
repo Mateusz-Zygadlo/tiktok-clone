@@ -5,8 +5,6 @@ const UserSchema = new Schema({
   nick: {
     type: 'string',
     required: true,
-    maxLength: 50,
-    unique: true,
   },
   firstName: {
     type: 'string',
