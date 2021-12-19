@@ -20,7 +20,7 @@ const Profile = () => {
   const fetchProfile = async (profileName: any) => {
     return await axios.get(`http://localhost:8000/profile/${profileName}`)
       .then((res) => {
-        setProfileData(res.data.user);
+        setProfileData(res.data.user)
       })
       .catch((err) => setProfileData(null))
   }
