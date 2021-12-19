@@ -105,6 +105,20 @@ router.get('/video/:id', (req, res) => {
   }
 })
 
+router.get('/suggestedAccounts', (req, res) => {
+  try{
+    User.find().limit(10).exec((err, result) => {
+      if(err || !result){
+        return res.sendStatus(403);
+      }
+
+      return res.json({ result })
+    })
+  }catch(err){
+    console.log(err);
+  }
+})
+
 router.post('/addComment/:id', (req, res) => {
   const { id } = req.params;
   const { nick, picture, _id } = req.body.user;
@@ -230,10 +244,34 @@ router.post('/deleteProfile/:id', (req, res) => {
       if(err || !result){
         return res.sendStatus(403);
       }
+      Video.find({owner: id}).exec((err, result) => {
+        if(err || !result){
+          return res.sendStatus(403);
+        }
+        Comment.find({owner: id}).exec((err, result) => {
+          if(err || !result){
+            return res.sendStatus(403);
+          }
+          return res
+            .clearCookie('JWT-TOKEN', {path: '/'})
+            .sendStatus(200);
+        })
+      })
+    })
+  }catch(err){
+    console.log(err);
+  }
+})
+router.get('/profileVideos/:id', (req, res) => {
+  const { id } = req.params;
 
-      return res
-        .clearCookie('JWT-TOKEN', {path: '/'})
-        .sendStatus(200);
+  try{
+    Video.find({owner: id}).exec((err, result) => {
+      if(err || !result){
+        return res.sendStatus(403);
+      }
+
+      return res.json({ result })
     })
   }catch(err){
     console.log(err);
