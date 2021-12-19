@@ -12,6 +12,7 @@ const Profile = () => {
   const [privateAccount, setPrivateAccount] = useState<boolean>(false);
   const [myInvitations, setMyInvitations] = useState<boolean>(false);
   const [accept, setAccept] = useState<boolean>(false);
+  const [videos, setVideos] = useState<any>(null);
 
   const { id } = useParams();
   const user = useDecodeUser();
@@ -22,6 +23,11 @@ const Profile = () => {
         setProfileData(res.data.user);
       })
       .catch((err) => setProfileData(null))
+  }
+  const getVideos = async () => {
+    return await axios.get(`http://localhost:8000/profileVideos/${user._id}`)
+      .then((res) => setVideos(res.data))
+      .catch((err) => console.log('error from server'))
   }
   const fetchOwner = async () => {
     if(user == null){
@@ -124,6 +130,12 @@ const Profile = () => {
   }, [profileData])
 
   useEffect(() => {
+    if(owner){
+      getVideos();
+    }
+  }, [owner])
+
+  useEffect(() => {
     fetchProfile(id);
     fetchOwner();
   }, [])
@@ -169,15 +181,23 @@ const Profile = () => {
           <p className="font-semibold mt-2">{profileData.description}</p>
           <div className="grid grid-cols-2 text-center mt-3">
             <p className="text-xl font-semibold w-40 mx-auto cursor-pointer border-b-2 border-transparent hover:border-black transition-colors">Videos</p>
-            <p className="text-xl font-semibold w-40 mx-auto cursor-pointer border-b-2 border-transparent hover:border-black transition-colors">Likes</p>
           </div>
           {profileData.privateAccount && following ?
             <p className="text-2xl font-semibold w-full flex justify-center mt-10">You following private account</p>
           : profileData.privateAccount ? <p className="text-2xl font-semibold w-full flex justify-center mt-10">Private profile</p>
           : profileData.videos.length > 0 ? (
             <div className="gridProfileVideos mt-1 pb-5">
-              {profileData.videos.map((video: any) => (
-                <div className="w-full h-full bg-black videoSize"></div>
+              {videos && videos.result.map((video: any) => (
+                <div className="w-full h-full bg-black videoSize relative">
+                  <a href={`/video/${video._id}`}>
+                    <div className="absolute w-full h-8 bg-black flex items-center justify-center cursor-pointer z-40">
+                      <p className="text-white">View in new page</p>
+                    </div>
+                  </a>
+                  <video className="h-full mx-auto" controls>
+                    <source src={video.video} type="video/mp4"/>
+                  </video>
+                </div>
               ))}
             </div>
           ): <p className="text-2xl font-semibold w-full flex justify-center mt-10">No videos</p>}

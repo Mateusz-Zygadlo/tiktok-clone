@@ -104,7 +104,10 @@ const Video = () => {
               <div className="ml-3 flex flex-col items-center">
                 {size.width < 1050 && (
                   <>
-                    <span className="material-icons text-3xl text-red-300 cursor-pointer mb-3">favorite_border</span>
+                    <div className="mt-4 flex items-center flex-col mb-2">
+                      <span className='material-icons text-3xl cursor-pointer text-red-300 transition-colors' onClick={toggleLike}>{like ? 'favorite' : 'favorite_border'}</span>
+                      <p className="ml-3">{video.result.likes.length} likes</p>
+                    </div>
                     <span className="material-icons text-2xl mb-3 cursor-pointer" title="comments" onClick={()=>{setMobileComments(true)}}>fireplace</span>
                   </>
                 )}

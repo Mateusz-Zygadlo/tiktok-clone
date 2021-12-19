@@ -1,5 +1,5 @@
 import Base from '../components/layouts/Base';
-import HomeVideos from '../components/home/HomeVideos';
+import HomeVideos from '../components/HomeVideos';
 
 const Home = () => {
   return(

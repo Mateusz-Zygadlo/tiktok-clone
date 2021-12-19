@@ -1,7 +1,7 @@
-import Video from '../base/Video';
+import Video from './base/Video';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import useDecodeUser from '../../hooks/useDecodeUser';
+import useDecodeUser from '../hooks/useDecodeUser';
 
 const HomeVideos = () => {
   const [videos, setVideos] = useState<any>(null);
@@ -36,7 +36,7 @@ const HomeVideos = () => {
 
   return(
     <div className="py-5">
-      {videos && videos.result && owner && owner._id && (
+      {videos && videos.result && owner && owner._id ? (
         <>
           {videos.result.map((video: any, index: number) => (
             <Video 
@@ -55,7 +55,7 @@ const HomeVideos = () => {
             />
           ))}
         </>
-      )}
+      ): <div>Not find any video</div>}
     </div>
   )
 }

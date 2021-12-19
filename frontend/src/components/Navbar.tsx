@@ -46,7 +46,9 @@ const Navbar: React.FC<Props> = ({ user }) => {
       <div className="flex items-center">
         {user && user.picture ? 
           <>
-            <span className="material-icons cursor-pointer hover:text-red-300" title="upload video">upload_file</span>
+            <a href='/upload'>
+              <span className="material-icons cursor-pointer hover:text-red-300" title="upload video">upload_file</span>
+            </a>
             <img src={user.picture || ''} alt="user profile" className="w-10 h-10 rounded-full mx-2" onMouseMove={profileMoveFunc} onMouseLeave={profileLeaveFunc} onClick={toggleOpenProfile} />
             {(size.width > 800 && profileLeave || viewMoreLeave) || size.width < 800 && openProfile ? (
               <div className="w-40 bg-white border-2 border-black absolute top-14 right-2 xl:right-24 p-2" onMouseMove={viewMoreMoveFunc} onMouseLeave={viewMoreLeaveFunc}>
